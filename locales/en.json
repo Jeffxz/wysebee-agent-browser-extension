@@ -51,7 +51,8 @@
       "requests": "Permissions",
       "sites": "Sites",
       "language": "Language",
-      "theme": "Theme"
+      "theme": "Theme",
+      "server": "Server"
     },
     "requests": {
       "intro": "A blocked request is refused on every site, trusted ones included, without asking you.",
@@ -205,6 +206,20 @@
       "light": "Light",
       "dark": "Dark",
       "hint": "For this extension in this browser."
+    },
+    "server": {
+      "label": "Wysebee Cloud server",
+      "intro": "The Wysebee Cloud this browser pairs with. To use a self-hosted Wysebee, enter its address here, then pair.",
+      "placeholder": "https://wysebee.example.com",
+      "save": "Save",
+      "hint": "An https address, or http for this computer or a private network (localhost, 10.x, 172.16–31.x, 192.168.x, .local).",
+      "invalid": "Enter an https address, such as https://wysebee.example.com. Plain http is only for this computer or a private network.",
+      "saveFailed": "The server could not be saved.",
+      "isDefault": "This is the default server.",
+      "useDefault": "Use the default ({{server}})",
+      "confirm": "A pairing belongs to its server: changing to {{server}} unpairs this browser. Pair it again afterwards.",
+      "confirmYes": "Change and unpair",
+      "cancel": "Cancel"
     }
   },
   "pair": {
@@ -230,7 +245,8 @@
       "too_many": "You already have 20 agents. Delete one in Wysebee, then pair again.",
       "invalid_name": "That name cannot be used. It needs to start with a letter.",
       "other": "Wysebee refused the pairing."
-    }
+    },
+    "server": "Server: {{server}}"
   },
   "link": {
     "connected": "Connected to Wysebee",
@@ -239,7 +255,8 @@
     "turnedOff": "Turned off",
     "enabled": "Let Wysebee use this browser",
     "enabledHint": "Wysebee can use this browser, as the sites and permissions below allow.",
-    "disabledHint": "Off: Wysebee cannot use this browser and nothing is kept open to it. You stay paired: switch it back on to carry on."
+    "disabledHint": "Off: Wysebee cannot use this browser and nothing is kept open to it. You stay paired: switch it back on to carry on.",
+    "server": "On {{server}}"
   },
   "unpair": {
     "button": "Unpair",

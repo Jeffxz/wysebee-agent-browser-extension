@@ -14,10 +14,11 @@ socket); Wysebee Desktop and agents living in the cloud drive it through the clo
 
 ## Build it, and load it unpacked
 
-Which Wysebee Cloud the extension talks to is fixed when it is built; nobody types a
-server. There is one published build, and a local one for development:
+Each build has a default Wysebee Cloud, set when it is built. A self-hosted Wysebee Cloud
+is set in the side panel instead ([Self-hosted Wysebee Cloud](#self-hosted-wysebee-cloud)),
+with no rebuild. There is one published build, and a local one for development:
 
-| Build | Server | Name in the browser | Icon |
+| Build | Default server | Name in the browser | Icon |
 |---|---|---|---|
 | **prod** | `https://app.wysebee.com` | Wysebee Agent | the yellow bee |
 | **local** | the one you give it | Wysebee Agent Local | a pink bee |
@@ -34,9 +35,9 @@ and recolours the bee. No dependencies.
 
 **local** is for developing against a wysebee-cloud of your own: on this computer
 (`http://localhost:8000`) or elsewhere. Give it any http or
-https address; it is built only when named, and never packaged. Rebuild it to change the
-server, then reload it in `chrome://extensions`. A pairing is with one cloud: after
-changing the server, pair again.
+https address; it is built only when named, and never packaged. Rebuild it to change its
+default server, then reload it in `chrome://extensions` (or set the server in the side
+panel's **Server** tab). A pairing is with one cloud: after changing the server, pair again.
 
 1. Open `chrome://extensions` (Edge: `edge://extensions`) and turn on **Developer mode**.
 2. **Load unpacked** and choose `dist/prod` or `dist/local`. They are separate
@@ -47,6 +48,30 @@ Rebuild after a change, then press the extension's reload button. (The repositor
 itself also loads, as the prod build: its `server.js` is prod's.)
 
 Chrome 116 or later.
+
+## Self-hosted Wysebee Cloud
+
+The side panel's **Server** tab sets which Wysebee Cloud this browser pairs with. It
+defaults to `https://app.wysebee.com` (the build's server). To pair with your own Wysebee
+Cloud (`WYSEBEE_EDITION=selfhost`), open the **Server** tab, enter its address, such as
+`http://localhost:8000` or `https://wysebee.example.com`, and **Save**. Then pair as usual:
+the code is typed in your server's web app.
+
+- The address is kept in this browser's extension storage (`cloudServer`, `cloud.js`) and
+  every request to the cloud goes there: pairing, polling, results, recordings, unpairing.
+- It is saved as an origin: a path, query and trailing slashes are dropped
+  (`https://wysebee.example.com/app/` is `https://wysebee.example.com`). Typed without a
+  scheme it is https, or http for a private host.
+- It must be https, except on this computer or a private network, where plain http is
+  allowed: `localhost`, `*.localhost`, `127.0.0.0/8`, `[::1]`, `10.0.0.0/8`,
+  `172.16.0.0/12`, `192.168.0.0/16` and `*.local` (e.g. `http://localhost:8000`).
+- A pairing belongs to its server. Changing the server while paired, or while a code is
+  showing, asks first, then unpairs (telling the old server) before switching.
+- **Use the default** goes back to the build's server. The panel shows the server under
+  the pairing form, and under the agent's name when it is not the default.
+- No new permission: the manifest's `<all_urls>` host permission already lets the worker
+  reach any origin. Agents never send the server's owner token; pairing is the code plus
+  this browser's own secret, as with the hosted cloud.
 
 ## Package it for the Chrome Web Store
 
@@ -135,7 +160,8 @@ check-in.
 |---|---|
 | `background.js` | The service worker: the poll loop, policy, approvals, every operation. |
 | `link.js` | The link with Wysebee Cloud: secret, code, requests, the pairing's state. Pure. |
-| `server.js` | The cloud's base URL, written by `scripts/build.mjs` into each build (prod in the source tree). |
+| `server.js` | The cloud's default base URL, written by `scripts/build.mjs` into each build (prod in the source tree). |
+| `cloud.js` | The Server tab's setting: checking a typed server, and which server to use. Pure. |
 | `scripts/build.mjs` | Makes `dist/prod`, and `dist/local` for a server you give it. |
 | `scripts/package.mjs` | Builds prod and zips it for the Chrome Web Store. |
 | `policy.js` | Whether an operation runs, asks or is refused. Pure. This file is the safety model. |
@@ -154,7 +180,8 @@ npm test             # node --test, with coverage and a 100% gate
 
 Node 22.8 or later. The suites cover the pure modules (`*.test.mjs`) and check that every
 language has English's keys and placeholders (`locales.test.mjs`), and that each build
-points at its own server and has no server setting (`build.test.mjs`). The pages' shared
+defaults to its own server (`build.test.mjs`), and that a typed server is checked and its
+requests go to it (`cloud.test.mjs`). The pages' shared
 helpers and the approval window run against a small fake DOM (`ui.test.mjs`), and
 screenshot fitting against faked image calls (`screenshot.test.mjs`). Nothing reaches the
 network.

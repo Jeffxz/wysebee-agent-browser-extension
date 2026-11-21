@@ -1,6 +1,6 @@
-// scripts/build.mjs: each build points at its own cloud, fixed when it is built, and none
-// has a server setting. prod never reaches a local wysebee-cloud; the local build
-// reaches only the server it was built with.
+// scripts/build.mjs: each build points at its own cloud by default, set when it is built;
+// the side panel's Server tab (cloud.js) may point it at a self-hosted one instead. prod
+// never names a local wysebee-cloud; the local build defaults to the server it was built with.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -94,18 +94,25 @@ for (const env of ["prod"]) {
     }
   });
 
-  test(`the ${env} build has no server setting`, () => {
+  test(`the ${env} build defaults to its server, and offers the Server tab for a self-hosted one`, () => {
     const files = texts(out(env));
     for (const [rel, text] of Object.entries(files)) {
+      // The old setting's names and stored key are gone; the Server tab's are cloud.js's.
       assert.ok(!text.includes("set_server"), `${rel}: set_server`);
       assert.ok(!text.includes("normaliseServer"), `${rel}: normaliseServer`);
       assert.ok(!text.includes("DEFAULT_SERVER"), `${rel}: DEFAULT_SERVER`);
-      assert.ok(!/storage\.local\.(get|set)\(\s*["{[]?\s*"?server/.test(text), `${rel}: reads or writes a stored server`);
+      assert.ok(!/storage\.local\.(get|set)\(\s*["{[]?\s*"?server/.test(text), `${rel}: reads or writes the old stored server`);
     }
     assert.ok(!files["ui/panel.js"].includes('"advanced"'), "the panel has no Advanced tab");
     const en = JSON.parse(files["locales/en.json"]);
-    assert.equal(en.settings.server, undefined);
     assert.equal(en.settings.tabs.advanced, undefined);
+    // The Server tab (2026-11-20): kept under cloud.js's key, checked by cloud.js, the
+    // build's server the default.
+    assert.ok(files["cloud.js"], "cloud.js ships");
+    assert.ok(en.settings.tabs.server && en.settings.server.label && en.settings.server.confirm);
+    assert.match(files["ui/panel.js"], /type: "set_cloud_server"/);
+    assert.match(files["background.js"], /msg\.type === "set_cloud_server"/);
+    assert.match(files["background.js"], /return serverFrom\(stored, SERVER\);/);
     // The old "Let Wysebee use this browser" card, which kept polling and refused every call,
     // is gone (its stored flag cleared at every start)...
     assert.equal(en.access, undefined);

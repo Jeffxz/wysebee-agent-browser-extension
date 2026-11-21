@@ -3,8 +3,8 @@
 //
 // Pure on purpose, like policy.js: no chrome.* and no network of its own (fetch is
 // handed in), so `node --test` covers it. background.js stores the state this file
-// shapes, and runs the loop. The cloud's base URL is handed in too: server.js, fixed
-// when the extension is built (scripts/build.mjs).
+// shapes, and runs the loop. The cloud's base URL is handed in too: the Server
+// tab's (cloud.js), else server.js's, set when the extension is built (scripts/build.mjs).
 
 export const ROUTES = "/api/v1/browser-links";
 

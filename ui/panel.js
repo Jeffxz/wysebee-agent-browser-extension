@@ -1,12 +1,13 @@
 // The side panel: pairing with Wysebee, then what is waiting for a yes, and
-// the settings (sites, kinds of request, language). The server is not one of them: it
-// is fixed when the extension is built (server.js).
+// the settings (sites, kinds of request, language, theme, and the Wysebee Cloud server:
+// the build's own, server.js's, unless a self-hosted one is set here; cloud.js).
 //
 // It only shows the worker's state (get_state, read every second and a half) and sends
 // it messages; every rule is the worker's. Each part is drawn again only when what it
 // shows changed, so a field being typed in is not replaced under the person.
 
 import { SITE_MODES } from "../policy.js";
+import { checkServer } from "../cloud.js";
 import { LANGUAGE_NAMES, THEMES, approvalList, copyButton, el, fill, send, t, toSiteUrl, useBrowserLanguage, useLanguage, useTheme } from "./shared.js";
 
 /** Kinds of request, grouped as the settings show them (policy.js's BLOCKABLE). */
@@ -35,7 +36,7 @@ const REQUEST_KINDS = [
   },
 ];
 
-const TABS = ["sites", "requests", "language", "theme"];
+const TABS = ["sites", "requests", "language", "theme", "server"];
 
 const $ = (id) => document.getElementById(id);
 
@@ -49,6 +50,11 @@ const ui = {
   siteError: "",
   siteMode: "auto",
   confirmUnpair: false,
+  // The Server tab: what is typed, why it was refused, and the server waiting for the
+  // person's yes to unpair (a pairing belongs to its server).
+  serverDraft: null,
+  serverError: "",
+  confirmServer: "",
 };
 // When the code runs out, by this page's clock.
 let deadline = 0;
@@ -86,7 +92,7 @@ function render() {
   // "Wysebee Agent" or "Wysebee Agent Local" (scripts/build.mjs).
   $("name").textContent = chrome.runtime.getManifest().name;
 
-  draw("link", [{ ...link, expiresIn: 0 }, state.connected, state.enabled, ui.busy, ui.pairError, ui.confirmUnpair], renderLink);
+  draw("link", [{ ...link, expiresIn: 0 }, state.connected, state.enabled, state.server, ui.busy, ui.pairError, ui.confirmUnpair], renderLink);
   tick();
 
   const paired = link.phase === "paired";
@@ -107,6 +113,8 @@ function render() {
     draw("body", ["sites", state.sites, ui.siteError], renderSites);
   } else if (ui.tab === "requests") {
     draw("body", ["requests", state.blocked, state.bookmarksAllowed, state.uploadRecordings], renderRequests);
+  } else if (ui.tab === "server") {
+    draw("body", ["server", state.server, state.defaultServer, link.phase, ui.serverError, ui.confirmServer], renderServer);
   } else if (ui.tab === "language") {
     draw("body", ["language", state.languageOverride, state.browserLanguage], renderLanguage);
   } else {
@@ -203,6 +211,7 @@ function renderLink() {
       el("p", { class: "muted small", text: t("link.agent") }),
       el("p", { class: "agent-label", text: link.agent.label || link.agent.name }),
       el("p", { class: "muted", text: `@${link.agent.name}` }),
+      state.server !== state.defaultServer ? el("p", { class: "muted small", text: t("link.server", { server: state.server }) }) : null,
       el(
         "p",
         { class: `status ${state.enabled && state.connected ? "on" : "off"}`, role: "status" },
@@ -259,6 +268,7 @@ function renderLink() {
   fill(box,
     link.notice === "unpaired" ? el("p", { class: "notice", text: t("pair.unpairedNotice") }) : null,
     el("p", { text: t("pair.intro") }),
+    el("p", { class: "muted small", text: t("pair.server", { server: state.server }) }),
     el(
       "form",
       {
@@ -503,6 +513,112 @@ function renderRequests() {
         }),
       ),
     ]),
+  );
+}
+
+/**
+ * The Wysebee Cloud this browser pairs with: the default, or a self-hosted one. Changing it
+ * while a pairing is under way or made asks first, since that pairing is the old server's.
+ */
+function renderServer() {
+  const linked = state.link.phase === "pending" || state.link.phase === "paired";
+  const isDefault = state.server === state.defaultServer;
+  const input = el("input", {
+    id: "server",
+    type: "text",
+    class: "grow",
+    autocomplete: "off",
+    spellcheck: "false",
+    placeholder: t("settings.server.placeholder"),
+    value: ui.serverDraft ?? state.server,
+    oninput: (e) => {
+      ui.serverDraft = e.target.value;
+    },
+  });
+  const save = async (typed, unpair = false) => {
+    const res = await send({ type: "set_cloud_server", server: typed, unpair });
+    if (res?.ok) {
+      ui.serverDraft = null;
+      ui.serverError = "";
+      ui.confirmServer = "";
+    } else if (res?.error === "linked") {
+      // "" is the default: the question names it.
+      ui.confirmServer = typed || state.defaultServer;
+    } else {
+      ui.serverError = t(res?.error === "invalid" ? "settings.server.invalid" : "settings.server.saveFailed");
+    }
+    delete drawn.body;
+    await refresh();
+  };
+  const submit = (e) => {
+    e.preventDefault();
+    const server = checkServer(input.value);
+    ui.serverDraft = input.value;
+    ui.confirmServer = "";
+    if (!server) {
+      ui.serverError = t("settings.server.invalid");
+      delete drawn.body;
+      render();
+      return;
+    }
+    ui.serverError = "";
+    void save(server);
+  };
+  fill($("tab-body"),
+    el("p", { class: "muted small", text: t("settings.server.intro") }),
+    el(
+      "form",
+      { class: "card stack", onsubmit: submit },
+      el("label", { for: "server", class: "label", text: t("settings.server.label") }),
+      el("div", { class: "row" }, input, el("button", { class: "btn primary", type: "submit", text: t("settings.server.save") })),
+      el("p", {
+        class: ui.serverError ? "error small" : "muted small",
+        role: ui.serverError ? "alert" : null,
+        text: ui.serverError || t("settings.server.hint"),
+      }),
+      ui.confirmServer && linked
+        ? [
+            el("p", { role: "alert", text: t("settings.server.confirm", { server: ui.confirmServer }) }),
+            el(
+              "div",
+              { class: "row" },
+              el("button", {
+                class: "btn danger solid",
+                type: "button",
+                text: t("settings.server.confirmYes"),
+                onclick: () => void save(ui.confirmServer === state.defaultServer ? "" : ui.confirmServer, true),
+              }),
+              el("button", {
+                class: "btn",
+                type: "button",
+                text: t("settings.server.cancel"),
+                onclick: () => {
+                  ui.confirmServer = "";
+                  ui.serverDraft = null;
+                  delete drawn.body;
+                  render();
+                },
+              }),
+            ),
+          ]
+        : null,
+      isDefault
+        ? el("p", { class: "muted small", text: t("settings.server.isDefault") })
+        : el(
+            "div",
+            { class: "row" },
+            el("button", {
+              class: "btn",
+              type: "button",
+              text: t("settings.server.useDefault", { server: state.defaultServer }),
+              onclick: () => {
+                ui.serverDraft = null;
+                ui.serverError = "";
+                void save("");
+              },
+            }),
+          ),
+    ),
   );
 }
 

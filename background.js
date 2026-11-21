@@ -68,6 +68,7 @@ import {
 } from "./recording.js";
 import * as page from "./page.js";
 import { SERVER } from "./server.js";
+import { SERVER_KEY, checkServer, serverFrom } from "./cloud.js";
 import {
   POLL_WAIT_SECONDS,
   UNPAIRED,
@@ -501,7 +502,7 @@ async function stopVideo(tabId, callId, why) {
   const { uploadRecordings } = await chrome.storage.local.get("uploadRecordings");
   const blockedUpload = uploadBlocked(polls(link), uploadRecordings);
   const upload = !blockedUpload
-    ? recordingRequest(SERVER, link.id, link.secret, {
+    ? recordingRequest(await cloudServer(), link.id, link.secret, {
         name: rec.name,
         startedAt: rec.startedAt,
         durationMs: Date.now() - rec.startedAt,
@@ -646,7 +647,8 @@ async function refreshBadge() {
 // --- the link with Wysebee Cloud ---------------------------------------------------
 //
 // The pairing (link.js's state, with the secret) is `link` in local storage; the
-// cloud's base URL is server.js's, fixed when the extension was built. While there is a link to poll, one loop of long polls
+// cloud's base URL is cloudServer(): the one set in the side panel's Server tab, else
+// server.js's (the build's default). While there is a link to poll, one loop of long polls
 // runs: each `paired` answer's calls go to handle() and their results are posted back;
 // `cancelled` ids stop what they can. A worker that was killed starts the loop again
 // from the alarm, onStartup, onInstalled, or a page asking for the state.
@@ -658,6 +660,30 @@ async function loadLink() {
 
 async function saveLink(link) {
   await chrome.storage.local.set({ link });
+}
+
+/** The Wysebee Cloud to talk to: the one set in the Server tab, else the build's (cloud.js). */
+async function cloudServer() {
+  const { [SERVER_KEY]: stored } = await chrome.storage.local.get(SERVER_KEY);
+  return serverFrom(stored, SERVER);
+}
+
+/**
+ * Set the server ("" for the build's default). A pairing belongs to its server, so one that
+ * is under way or made is forgotten first (telling the old server) - only with `unpair`,
+ * the person's yes in the panel; without it the answer is "linked".
+ */
+async function setCloudServer(typed, unpair) {
+  const server = typed === "" ? SERVER : checkServer(typed);
+  if (!server) return { ok: false, error: "invalid" };
+  if (server !== (await cloudServer())) {
+    const link = await loadLink();
+    if (polls(link) && !unpair) return { ok: false, error: "linked" };
+    if (link.phase !== "unpaired") await forgetLink();
+  }
+  if (server === SERVER) await chrome.storage.local.remove(SERVER_KEY);
+  else await chrome.storage.local.set({ [SERVER_KEY]: server });
+  return { ok: true, server };
 }
 
 
@@ -712,14 +738,15 @@ async function setEnabled(on) {
     stopEverything();
     const link = await loadLink();
     if (link.phase === "paired") {
+      const server = await cloudServer();
       try {
         const answer = await exchange(
           (url, init) => fetch(url, init),
-          pollRequest(SERVER, link.id, link.secret, { version: VERSION, browser: BROWSER, paused: true }, 0),
+          pollRequest(server, link.id, link.secret, { version: VERSION, browser: BROWSER, paused: true }, 0),
         );
         const calls = Array.isArray(answer?.body?.calls) ? answer.body.calls : [];
         for (const call of calls) {
-          void exchange((url, init) => fetch(url, init), resultRequest(SERVER, link.id, link.secret, call.id, { ok: false, error: TURNED_OFF }));
+          void exchange((url, init) => fetch(url, init), resultRequest(server, link.id, link.secret, call.id, { ok: false, error: TURNED_OFF }));
         }
       } catch {
         /* Not told: Wysebee sees it as offline once it hears nothing. */
@@ -748,7 +775,7 @@ async function pollLoop() {
     const epoch = linkEpoch;
     // Reading storage is also the extension API touched between polls.
     await load();
-    const server = SERVER;
+    const server = await cloudServer();
     // The first poll of a loop does not wait, so "connected" is known at once.
     const wait = first || failures > 0 ? 0 : POLL_WAIT_SECONDS;
     first = false;
@@ -843,7 +870,7 @@ async function startPairing(typed) {
   if (!name) return { ok: false, error: "invalid_name" };
   const current = await loadLink();
   if (polls(current)) return { ok: false, error: "already" };
-  const server = SERVER;
+  const server = await cloudServer();
   const secret = makeSecret();
   let answer;
   try {
@@ -875,7 +902,7 @@ async function forgetLink() {
     try {
       const { status } = await exchange(
         (url, init) => fetch(url, init),
-        unpairRequest(SERVER, link.id, link.secret),
+        unpairRequest(await cloudServer(), link.id, link.secret),
         10_000,
       );
       told = status < 500;
@@ -1013,7 +1040,9 @@ chrome.runtime.onMessage.addListener((msg, sender, reply) => {
         // Whether Wysebee Cloud answered a poll lately; only means something when paired.
         connected: polls(link) && isConnected(),
         enabled: await isEnabled(),
-        server: SERVER,
+        // The Wysebee Cloud this browser pairs with, and the build's default.
+        server: await cloudServer(),
+        defaultServer: SERVER,
         language: lang.current,
         browserLanguage: lang.browser,
         languageOverride: lang.override,
@@ -1102,6 +1131,9 @@ chrome.runtime.onMessage.addListener((msg, sender, reply) => {
       }
       await refreshBadge();
       reply({ ok: true, bookmarksAllowed: allowed });
+    } else if (msg.type === "set_cloud_server") {
+      // The Server tab: a self-hosted Wysebee Cloud, or "" for the default.
+      reply(await setCloudServer(String(msg.server ?? ""), msg.unpair === true));
     } else if (msg.type === "set_upload_recordings") {
       // Whether scenario videos also go to Wysebee Cloud (off by default). It applies to
       // recordings stopped from now on; one already uploading carries on.
@@ -1713,7 +1745,8 @@ chrome.alarms.onAlarm.addListener(() => {
 chrome.runtime.onStartup.addListener(() => ensureLoop());
 chrome.runtime.onInstalled.addListener(() => ensureLoop());
 // Settings an earlier version kept and this one no longer has, cleared at every start:
-// the server (fixed at build time now) and "Let Wysebee use this browser" (removed).
+// its "server" (the Server tab's is cloud.js's SERVER_KEY now) and "Let Wysebee use this
+// browser" (removed).
 // Nothing reads either any more; clearing them only keeps storage honest.
 void chrome.storage.local.remove(["server", "paused"]);
 ensureLoop();

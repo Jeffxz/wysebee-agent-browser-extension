@@ -51,7 +51,8 @@
       "requests": "权限",
       "sites": "网站",
       "language": "语言",
-      "theme": "主题"
+      "theme": "主题",
+      "server": "服务器"
     },
     "requests": {
       "intro": "被阻止的请求会在所有网站上被直接拒绝，包括受信任的网站，不会询问你。",
@@ -205,6 +206,20 @@
       "light": "浅色",
       "dark": "深色",
       "hint": "仅用于此浏览器中的此扩展。"
+    },
+    "server": {
+      "label": "Wysebee Cloud 服务器",
+      "intro": "此浏览器配对的 Wysebee Cloud。要使用自托管的 Wysebee，请在此输入其地址，然后配对。",
+      "placeholder": "https://wysebee.example.com",
+      "save": "保存",
+      "hint": "https 地址，或用于本机或专用网络的 http 地址（localhost、10.x、172.16–31.x、192.168.x、.local）。",
+      "invalid": "请输入 https 地址，例如 https://wysebee.example.com。纯 http 仅限本机或专用网络。",
+      "saveFailed": "无法保存服务器。",
+      "isDefault": "这是默认服务器。",
+      "useDefault": "使用默认服务器（{{server}}）",
+      "confirm": "配对属于其服务器：改为 {{server}} 会取消此浏览器的配对。之后请重新配对。",
+      "confirmYes": "更改并取消配对",
+      "cancel": "取消"
     }
   },
   "pair": {
@@ -230,7 +245,8 @@
       "too_many": "你已有 20 个智能体。请在 Wysebee 中删除一个，然后重新配对。",
       "invalid_name": "该名称无法使用。名称需要以字母开头。",
       "other": "Wysebee 拒绝了配对。"
-    }
+    },
+    "server": "服务器：{{server}}"
   },
   "link": {
     "connected": "已连接到 Wysebee",
@@ -239,7 +255,8 @@
     "turnedOff": "已关闭",
     "enabled": "允许 Wysebee 使用此浏览器",
     "enabledHint": "Wysebee 可以按下方站点和权限的设置使用此浏览器。",
-    "disabledHint": "已关闭:Wysebee 无法使用此浏览器,也不会保持与它的连接。配对仍然保留,重新开启即可继续。"
+    "disabledHint": "已关闭:Wysebee 无法使用此浏览器,也不会保持与它的连接。配对仍然保留,重新开启即可继续。",
+    "server": "位于 {{server}}"
   },
   "unpair": {
     "button": "取消配对",

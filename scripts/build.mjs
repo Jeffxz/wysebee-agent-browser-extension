@@ -5,7 +5,8 @@
 //   node scripts/build.mjs local <server URL>   # dist/local, for development
 //
 // Each build is a copy of what the extension ships (no tests, no docs) with server.js
-// rewritten to its cloud, so the server is fixed at build time and nobody types one.
+// rewritten to its cloud: the server it talks to unless the person sets a self-hosted one
+// in the side panel's Server tab (cloud.js).
 // The local build talks to whichever Wysebee Cloud it is given when built; it is named
 // "Wysebee Agent Local", its bee is pink, so it can be loaded beside the prod one and
 // told apart in the toolbar, and it is never built unless asked for by name.
@@ -19,7 +20,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-/** The published build, fixed to its cloud. */
+/** The published build, and the cloud it defaults to. */
 export const BUILDS = {
   prod: { server: "https://app.wysebee.com", name: "Wysebee Agent" },
 };
@@ -72,7 +73,7 @@ function shipped() {
 
 export function serverModule(env, server) {
   return (
-    `// Which Wysebee Cloud this build talks to, fixed when it was built (scripts/build.mjs).\n` +
+    `// Which Wysebee Cloud this build talks to by default, set when it was built (scripts/build.mjs).\n` +
     `export const ENV = ${JSON.stringify(env)};\n` +
     `export const SERVER = ${JSON.stringify(server)};\n`
   );

@@ -51,7 +51,8 @@
       "requests": "権限",
       "sites": "サイト",
       "language": "言語",
-      "theme": "テーマ"
+      "theme": "テーマ",
+      "server": "サーバー"
     },
     "requests": {
       "intro": "ブロックしたリクエストは、信頼済みのサイトも含むすべてのサイトで、確認なしに拒否されます。",
@@ -205,6 +206,20 @@
       "light": "ライト",
       "dark": "ダーク",
       "hint": "このブラウザのこの拡張機能に適用されます。"
+    },
+    "server": {
+      "label": "Wysebee Cloud サーバー",
+      "intro": "このブラウザーがペアリングする Wysebee Cloud です。セルフホストの Wysebee を使う場合は、ここにアドレスを入力してからペアリングしてください。",
+      "placeholder": "https://wysebee.example.com",
+      "save": "保存",
+      "hint": "https のアドレス、またはこのコンピューターやプライベートネットワーク (localhost、10.x、172.16–31.x、192.168.x、.local) の http のアドレス。",
+      "invalid": "https://wysebee.example.com のような https のアドレスを入力してください。http はこのコンピューターかプライベートネットワークでのみ使えます。",
+      "saveFailed": "サーバーを保存できませんでした。",
+      "isDefault": "これは既定のサーバーです。",
+      "useDefault": "既定のサーバーを使う ({{server}})",
+      "confirm": "ペアリングはサーバーごとです。{{server}} に変更すると、このブラウザーのペアリングは解除されます。変更後にもう一度ペアリングしてください。",
+      "confirmYes": "変更してペアリングを解除",
+      "cancel": "キャンセル"
     }
   },
   "pair": {
@@ -230,7 +245,8 @@
       "too_many": "エージェントは既に 20 個あります。Wysebee で 1 つ削除してから、もう一度ペアリングしてください。",
       "invalid_name": "その名前は使用できません。文字で始まる必要があります。",
       "other": "Wysebee がペアリングを拒否しました。"
-    }
+    },
+    "server": "サーバー: {{server}}"
   },
   "link": {
     "connected": "Wysebee に接続済み",
@@ -239,7 +255,8 @@
     "turnedOff": "オフ",
     "enabled": "Wysebee にこのブラウザーの使用を許可",
     "enabledHint": "下のサイトと権限の設定の範囲で、Wysebee はこのブラウザーを使えます。",
-    "disabledHint": "オフ:Wysebee はこのブラウザーを使えず、接続も保持されません。ペアリングは残るので、オンに戻せば続けられます。"
+    "disabledHint": "オフ:Wysebee はこのブラウザーを使えず、接続も保持されません。ペアリングは残るので、オンに戻せば続けられます。",
+    "server": "{{server}} に接続"
   },
   "unpair": {
     "button": "ペアリングを解除",
