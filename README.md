@@ -51,9 +51,11 @@ Chrome 116 or later.
 
 ## Self-hosted Wysebee Cloud
 
-To pair with your own Wysebee Cloud (`WYSEBEE_EDITION=selfhost`) rather than
-`https://app.wysebee.com`, open the side panel's **Server** tab, enter the server's
-address and **Save**, then pair as usual: the code is typed in your server's web app.
+The side panel's **Server** tab sets which Wysebee Cloud this browser pairs with. It
+defaults to `https://app.wysebee.com` (the build's server). To pair with your own Wysebee
+Cloud (`WYSEBEE_EDITION=selfhost`), open the **Server** tab, enter its address, such as
+`http://localhost:8000` or `https://wysebee.example.com`, and **Save**. Then pair as usual:
+the code is typed in your server's web app.
 
 - The address is kept in this browser's extension storage (`cloudServer`, `cloud.js`) and
   every request to the cloud goes there: pairing, polling, results, recordings, unpairing.
