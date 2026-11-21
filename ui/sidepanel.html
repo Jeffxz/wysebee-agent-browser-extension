@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wysebee Agent</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="top">
+      <img src="../icon48.png" alt="" width="24" height="24" />
+      <h1 id="name">Wysebee Agent</h1>
+      <span id="version" class="muted small"></span>
+    </header>
+    <main class="stack">
+      <p id="worker-down" class="notice warn" hidden></p>
+      <section id="link" class="card"></section>
+      <section id="approvals" class="stack" hidden></section>
+      <nav id="tabs" class="tabs" role="tablist"></nav>
+      <section id="tab-body" class="stack" role="tabpanel"></section>
+    </main>
+    <script type="module" src="panel.js"></script>
+  </body>
+</html>

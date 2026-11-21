@@ -1,0 +1,252 @@
+{
+  "approval": {
+    "title": "一個 AI 助理想要使用你的瀏覽器",
+    "allowOnce": "允許一次",
+    "alwaysAllow": "一律允許",
+    "alwaysAllowTitle": "以後不再為 {{origin}} 詢問",
+    "deny": "拒絕",
+    "nothingWaiting": "沒有等待你處理的請求。",
+    "bookmarksOrigin": "你的書籤",
+    "summary": {
+      "navigate": "開啟 {{url}}",
+      "openTab": "在新分頁中開啟 {{url}}",
+      "closeTabTitled": "關閉 {{origin}} 上的分頁「{{title}}」",
+      "closeTab": "關閉 {{origin}} 上的一個分頁",
+      "click": "點按 {{origin}} 上的一個元素",
+      "type": "在 {{origin}} 上的輸入欄位中輸入",
+      "scroll": "捲動 {{origin}} 上的網頁",
+      "drag": "拖曳 {{origin}} 上的一個元素",
+      "bookmarksQuery": "在你的書籤中搜尋「{{query}}」",
+      "bookmarks": "讀取你的書籤",
+      "mouseNative": "在 {{origin}} 上使用滑鼠（真實輸入）",
+      "mouse": "在 {{origin}} 上使用滑鼠",
+      "screenshot": "擷取 {{origin}} 的螢幕截圖",
+      "activate": "切換到 {{origin}} 上的分頁",
+      "read": "讀取 {{origin}} 上的網頁",
+      "console": "讀取 {{origin}} 上的主控台",
+      "network": "讀取 {{origin}} 上的網路活動",
+      "evaluate": "在 {{origin}} 上執行 JavaScript：{{code}}",
+      "viewportReset": "還原 {{origin}} 的視窗大小",
+      "viewport": "變更 {{origin}} 的視窗大小",
+      "inspect": "檢查 {{origin}} 上的一個元素",
+      "audit": "稽核 {{origin}} 上的網頁",
+      "performance": "測量 {{origin}} 的效能",
+      "reload": "重新載入 {{origin}} 上的網頁",
+      "mock": "在 {{origin}} 上模擬網路回應：{{rules}}",
+      "mockReplace": "將 {{origin}} 上的模擬網路回應替換為：{{rules}}",
+      "mockClear": "停止在 {{origin}} 上模擬網路回應",
+      "record": "錄製 {{origin}} 的影片，儲存到「下載」和 Wysebee"
+    }
+  },
+  "recording": {
+    "title": "錄製已儲存",
+    "message": "智慧代理在此瀏覽器中操作的圖片、動畫 GIF 和 WebP，以及這些步驟的 Playwright 測試儲存在 {{folder}}"
+  },
+  "common": {
+    "checking": "正在檢查…",
+    "workerDown": "擴充功能的背景程序沒有回應。請重新載入擴充功能。"
+  },
+  "settings": {
+    "tabs": {
+      "requests": "權限",
+      "sites": "網站",
+      "language": "語言",
+      "theme": "主題"
+    },
+    "requests": {
+      "intro": "被封鎖的請求會在所有網站上被直接拒絕，包括受信任的網站，不會詢問你。",
+      "blocked": "已封鎖",
+      "allowed": "已允許",
+      "blockAria": "封鎖：{{label}}",
+      "bookmarksAllow": "不需詢問即允許 — 收到請求時直接提供所有書籤網址，不跳出確認。",
+      "bookmarksAllowAria": "允許不需詢問即讀取書籤",
+      "recordUpload": "同時將每段影片上傳到 Wysebee 以供重播 — 影片可能包含分頁上的任何內容。",
+      "recordUploadAria": "將錄製上傳到 Wysebee",
+      "groups": {
+        "reading": "讀取",
+        "acting": "操作網頁",
+        "tabs": "分頁與瀏覽",
+        "devtools": "開發者工具"
+      },
+      "kinds": {
+        "browser_tabs": {
+          "label": "列出你的分頁",
+          "hint": "已開啟分頁的標題與網站。"
+        },
+        "browser_snapshot": {
+          "label": "讀取網頁",
+          "hint": "網頁的文字與結構。"
+        },
+        "browser_screenshot": {
+          "label": "擷取螢幕截圖",
+          "hint": "目前可見分頁的影像。"
+        },
+        "browser_bookmarks": {
+          "label": "讀取書籤",
+          "hint": "完整網址，不受任何網站層級的約束 — 書籤不屬於任何網站。"
+        },
+        "browser_click": {
+          "label": "點按",
+          "hint": "點按網頁上的元素。"
+        },
+        "browser_type": {
+          "label": "輸入",
+          "hint": "在網頁上的輸入欄位中輸入。"
+        },
+        "browser_scroll": {
+          "label": "捲動",
+          "hint": "捲動網頁或某個元素。"
+        },
+        "browser_drag": {
+          "label": "拖曳",
+          "hint": "把一個元素拖曳到另一個元素上。"
+        },
+        "browser_mouse": {
+          "label": "使用滑鼠",
+          "hint": "按下、移動與放開，在網頁中模擬。"
+        },
+        "native_input": {
+          "label": "以真實輸入使用滑鼠",
+          "hint": "透過瀏覽器的偵錯工具，與你本人的操作無法區分。"
+        },
+        "browser_navigate": {
+          "label": "前往某個網址",
+          "hint": "變更分頁所在的位置。"
+        },
+        "browser_open_tab": {
+          "label": "開啟分頁",
+          "hint": "開啟一個新分頁。"
+        },
+        "browser_close_tab": {
+          "label": "關閉分頁",
+          "hint": "關閉一個分頁。"
+        },
+        "browser_activate": {
+          "label": "切換分頁",
+          "hint": "把一個分頁切換到最前面。"
+        },
+        "browser_console": {
+          "label": "讀取主控台",
+          "hint": "記錄、警告、錯誤與未捕捉的例外。"
+        },
+        "browser_network": {
+          "label": "讀取網路活動",
+          "hint": "請求、狀態與耗時。登入標頭與 Cookie 會被隱藏。"
+        },
+        "browser_network_body": {
+          "label": "讀取回應內容",
+          "hint": "請求從伺服器收到的內容。"
+        },
+        "browser_evaluate": {
+          "label": "執行 JavaScript",
+          "hint": "像在 DevTools 主控台中一樣，在網頁中執行指令碼。確認提示會顯示指令碼內容。"
+        },
+        "browser_viewport": {
+          "label": "變更視窗大小",
+          "hint": "模擬手機、平板或其他螢幕大小。"
+        },
+        "browser_inspect": {
+          "label": "檢查元素",
+          "hint": "元素的樣式、大小、位置與 HTML。"
+        },
+        "browser_audit": {
+          "label": "稽核網頁",
+          "hint": "檢查無障礙、SEO 與常見問題。"
+        },
+        "browser_performance": {
+          "label": "測量效能",
+          "hint": "載入耗時、繪製、版面位移與記憶體。"
+        },
+        "browser_reload": {
+          "label": "重新載入網頁",
+          "hint": "重新載入分頁，可選擇略過快取。"
+        },
+        "browser_mock": {
+          "label": "模擬網路回應",
+          "hint": "以錯誤、自訂回應或延遲回應選定的要求，以測試錯誤處理。除非網站允許全部操作，否則每次都會詢問。在您開啟之前保持關閉。"
+        },
+        "browser_record": {
+          "label": "錄製影片",
+          "hint": "在代理執行情境時錄製分頁。儲存到 Downloads/Wysebee Agent。在您開啟之前保持關閉。"
+        }
+      }
+    },
+    "sites": {
+      "intro": "這些網站不需詢問即可使用。其他網站都會先詢問你。只有 http 與 https 網頁可以被操作。",
+      "placeholder": "localhost:3000 或 https://example.com",
+      "siteAria": "要新增的網站",
+      "newLevelAria": "新網站的層級",
+      "add": "新增網站",
+      "invalid": "請輸入 http 或 https 網站，例如 localhost:3000 或 example.com。",
+      "saveFailed": "只能新增 http 或 https 網站。",
+      "none": "還沒有。請在上方新增，或在確認提示中選擇「一律允許」。",
+      "levelFor": "{{origin}} 的層級",
+      "remove": "移除",
+      "removeOrigin": "移除 {{origin}}",
+      "modes": {
+        "auto": {
+          "label": "受信任",
+          "hint": "不需詢問即可執行；關閉你自己的分頁仍會詢問。"
+        },
+        "full": {
+          "label": "允許所有動作",
+          "hint": "關閉分頁也不需詢問。適用於正在自動化測試的 Web 應用程式。"
+        }
+      }
+    },
+    "language": {
+      "label": "語言",
+      "followBrowser": "與瀏覽器相同（{{name}}）",
+      "hint": "僅適用於此瀏覽器中的此擴充功能。"
+    },
+    "theme": {
+      "label": "主題",
+      "system": "與電腦相同",
+      "light": "淺色",
+      "dark": "深色",
+      "hint": "僅適用於此瀏覽器中的此擴充功能。"
+    }
+  },
+  "pair": {
+    "intro": "將此瀏覽器與 Wysebee 配對。配對會建立一個新的代理，且只有該代理可以使用此瀏覽器。",
+    "nameLabel": "代理名稱",
+    "namePlaceholder": "研究助理",
+    "nameInvalid": "請輸入 1 到 60 個字元的名稱，不可換行。",
+    "pair": "配對",
+    "starting": "正在開始…",
+    "codeHelp": "在 Wysebee 中輸入此代碼：裝置 → 配對瀏覽器",
+    "copy": "複製配對代碼",
+    "copied": "已複製",
+    "codeFor": "正在以「{{name}}」配對",
+    "expiresIn": "代碼將在 {{time}} 後過期",
+    "cancel": "取消",
+    "tryAnother": "換一個名稱",
+    "expired": "代碼在輸入之前已過期。",
+    "unpairedNotice": "此瀏覽器已在 Wysebee 中取消配對，或其代理已被刪除。",
+    "failed": "無法連線到 {{server}} 的 Wysebee。請檢查網路連線後再試一次。",
+    "refused": {
+      "name_taken": "已有代理使用該名稱。",
+      "reserved": "該名稱已被保留。",
+      "too_many": "你已有 20 個代理。請在 Wysebee 中刪除一個，然後重新配對。",
+      "invalid_name": "該名稱無法使用。名稱需要以字母開頭。",
+      "other": "Wysebee 拒絕了配對。"
+    }
+  },
+  "link": {
+    "connected": "已連線到 Wysebee",
+    "reconnecting": "正在重新連線…",
+    "agent": "代理",
+    "turnedOff": "已關閉",
+    "enabled": "允許 Wysebee 使用此瀏覽器",
+    "enabledHint": "Wysebee 可以依下方網站和權限的設定使用此瀏覽器。",
+    "disabledHint": "已關閉:Wysebee 無法使用此瀏覽器,也不會保持與它的連線。配對仍然保留,重新開啟即可繼續。"
+  },
+  "unpair": {
+    "button": "取消配對",
+    "confirm": "要取消此瀏覽器的配對嗎？代理「{{label}}」會保留在 Wysebee 中，但沒有瀏覽器。",
+    "yes": "取消配對",
+    "cancel": "取消",
+    "hint": "Wysebee 將不再使用此瀏覽器。若要再次使用，請將其配對為新的代理。"
+  },
+  "waiting": "等待你的回應"
+}

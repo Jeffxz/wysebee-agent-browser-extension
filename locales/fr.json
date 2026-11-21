@@ -1,0 +1,252 @@
+{
+  "approval": {
+    "title": "Un assistant IA veut utiliser votre navigateur",
+    "allowOnce": "Autoriser une fois",
+    "alwaysAllow": "Toujours autoriser",
+    "alwaysAllowTitle": "Ne plus jamais demander pour {{origin}}",
+    "deny": "Refuser",
+    "nothingWaiting": "Rien ne vous attend.",
+    "bookmarksOrigin": "Vos favoris",
+    "summary": {
+      "navigate": "Ouvrir {{url}}",
+      "openTab": "Ouvrir {{url}} dans un nouvel onglet",
+      "closeTabTitled": "Fermer l'onglet « {{title}} » sur {{origin}}",
+      "closeTab": "Fermer un onglet sur {{origin}}",
+      "click": "Cliquer sur un élément sur {{origin}}",
+      "type": "Saisir dans un champ sur {{origin}}",
+      "scroll": "Faire défiler la page sur {{origin}}",
+      "drag": "Faire glisser un élément sur {{origin}}",
+      "bookmarksQuery": "Rechercher « {{query}} » dans vos favoris",
+      "bookmarks": "Lire vos favoris",
+      "mouseNative": "Utiliser la souris sur {{origin}} (saisie réelle)",
+      "mouse": "Utiliser la souris sur {{origin}}",
+      "screenshot": "Faire une capture d'écran de {{origin}}",
+      "activate": "Passer à un onglet sur {{origin}}",
+      "read": "Lire la page sur {{origin}}",
+      "console": "Lire la console sur {{origin}}",
+      "network": "Lire l'activité réseau sur {{origin}}",
+      "evaluate": "Exécuter du JavaScript sur {{origin}} : {{code}}",
+      "viewportReset": "Rétablir la taille de la fenêtre sur {{origin}}",
+      "viewport": "Changer la taille de la fenêtre sur {{origin}}",
+      "inspect": "Inspecter un élément sur {{origin}}",
+      "audit": "Auditer la page sur {{origin}}",
+      "performance": "Mesurer les performances sur {{origin}}",
+      "reload": "Recharger la page sur {{origin}}",
+      "mock": "Simuler des réponses réseau sur {{origin}} : {{rules}}",
+      "mockReplace": "Remplacer les réponses réseau simulées sur {{origin}} par : {{rules}}",
+      "mockClear": "Arrêter de simuler des réponses réseau sur {{origin}}",
+      "record": "Filmer {{origin}}, enregistré dans vos Téléchargements et dans Wysebee"
+    }
+  },
+  "recording": {
+    "title": "Enregistrement sauvegardé",
+    "message": "Les images de ce que l’agent a fait dans ce navigateur, un GIF et un WebP animés, et un test Playwright des étapes sont dans {{folder}}"
+  },
+  "common": {
+    "checking": "Vérification…",
+    "workerDown": "Le service d'arrière-plan de l'extension ne répond pas. Rechargez l'extension."
+  },
+  "settings": {
+    "tabs": {
+      "requests": "Autorisations",
+      "sites": "Sites",
+      "language": "Langue",
+      "theme": "Thème"
+    },
+    "requests": {
+      "intro": "Une demande bloquée est refusée sur tous les sites, y compris ceux de confiance, sans vous demander.",
+      "blocked": "Bloqué",
+      "allowed": "Autorisé",
+      "blockAria": "Bloquer : {{label}}",
+      "bookmarksAllow": "Autoriser sans demander — toutes les URL de vos favoris, sur demande, sans confirmation.",
+      "bookmarksAllowAria": "Autoriser la lecture des favoris sans demander",
+      "recordUpload": "Envoyer aussi chaque vidéo à Wysebee pour la revoir — elle peut montrer tout ce qui est dans l’onglet.",
+      "recordUploadAria": "Envoyer les enregistrements à Wysebee",
+      "groups": {
+        "reading": "Lecture",
+        "acting": "Actions sur les pages",
+        "tabs": "Onglets et navigation",
+        "devtools": "Outils de développement"
+      },
+      "kinds": {
+        "browser_tabs": {
+          "label": "Lister vos onglets",
+          "hint": "Titres et sites des onglets ouverts."
+        },
+        "browser_snapshot": {
+          "label": "Lire les pages",
+          "hint": "Le texte et la structure d'une page."
+        },
+        "browser_screenshot": {
+          "label": "Faire des captures d'écran",
+          "hint": "Une image de l'onglet visible."
+        },
+        "browser_bookmarks": {
+          "label": "Lire les favoris",
+          "hint": "Des URL complètes, non couvertes par le niveau d'un site — elles n'appartiennent à aucun site."
+        },
+        "browser_click": {
+          "label": "Cliquer",
+          "hint": "Cliquer sur un élément d'une page."
+        },
+        "browser_type": {
+          "label": "Saisir",
+          "hint": "Saisir dans un champ d'une page."
+        },
+        "browser_scroll": {
+          "label": "Faire défiler",
+          "hint": "Faire défiler une page ou un élément."
+        },
+        "browser_drag": {
+          "label": "Faire glisser",
+          "hint": "Faire glisser un élément sur un autre."
+        },
+        "browser_mouse": {
+          "label": "Utiliser la souris",
+          "hint": "Appuyer, déplacer et relâcher, simulés dans la page."
+        },
+        "native_input": {
+          "label": "Utiliser la souris avec une saisie réelle",
+          "hint": "Via le débogueur du navigateur, impossible à distinguer de vous."
+        },
+        "browser_navigate": {
+          "label": "Aller à une URL",
+          "hint": "Changer la page d'un onglet."
+        },
+        "browser_open_tab": {
+          "label": "Ouvrir des onglets",
+          "hint": "Ouvrir un nouvel onglet."
+        },
+        "browser_close_tab": {
+          "label": "Fermer des onglets",
+          "hint": "Fermer un onglet."
+        },
+        "browser_activate": {
+          "label": "Changer d'onglet",
+          "hint": "Mettre un onglet au premier plan."
+        },
+        "browser_console": {
+          "label": "Lire la console",
+          "hint": "Journaux, avertissements, erreurs et exceptions non interceptées."
+        },
+        "browser_network": {
+          "label": "Lire l'activité réseau",
+          "hint": "Requêtes, statuts et durées. Les en-têtes de connexion et les cookies sont masqués."
+        },
+        "browser_network_body": {
+          "label": "Lire le corps des réponses",
+          "hint": "Ce qu'une requête a reçu du serveur."
+        },
+        "browser_evaluate": {
+          "label": "Exécuter du JavaScript",
+          "hint": "Exécuter un script dans la page, comme dans la console DevTools. La demande affiche le script."
+        },
+        "browser_viewport": {
+          "label": "Changer la taille de la fenêtre",
+          "hint": "Émuler un téléphone, une tablette ou une autre taille d'écran."
+        },
+        "browser_inspect": {
+          "label": "Inspecter des éléments",
+          "hint": "Styles, taille, position et HTML d'un élément."
+        },
+        "browser_audit": {
+          "label": "Auditer des pages",
+          "hint": "Vérifier l'accessibilité, le SEO et les erreurs courantes."
+        },
+        "browser_performance": {
+          "label": "Mesurer les performances",
+          "hint": "Temps de chargement, affichages, décalages de mise en page et mémoire."
+        },
+        "browser_reload": {
+          "label": "Recharger des pages",
+          "hint": "Recharger un onglet, éventuellement sans le cache."
+        },
+        "browser_mock": {
+          "label": "Simuler des réponses réseau",
+          "hint": "Répondre à certaines requêtes par une erreur, une réponse inventée ou un délai, pour tester la gestion des erreurs. Demande à chaque fois, sauf si le site autorise tout. Désactivé tant que vous ne l’activez pas."
+        },
+        "browser_record": {
+          "label": "Enregistrer des vidéos",
+          "hint": "Filmer un onglet pendant que l’agent déroule un scénario. Enregistré dans Téléchargements/Wysebee Agent. Désactivé tant que vous ne l’activez pas."
+        }
+      }
+    },
+    "sites": {
+      "intro": "Ces sites peuvent être utilisés sans demander. Tout le reste vous demande d'abord. Seules les pages http et https peuvent être contrôlées.",
+      "placeholder": "localhost:3000 ou https://example.com",
+      "siteAria": "Site à ajouter",
+      "newLevelAria": "Niveau du nouveau site",
+      "add": "Ajouter le site",
+      "invalid": "Saisissez un site http ou https, par exemple localhost:3000 ou example.com.",
+      "saveFailed": "Seul un site http ou https peut être ajouté.",
+      "none": "Aucun pour l'instant. Ajoutez-en un ci-dessus, ou choisissez « Toujours autoriser » dans une demande.",
+      "levelFor": "Niveau de {{origin}}",
+      "remove": "Supprimer",
+      "removeOrigin": "Supprimer {{origin}}",
+      "modes": {
+        "auto": {
+          "label": "De confiance",
+          "hint": "S'exécute sans demander ; fermer l'un de vos onglets demande toujours."
+        },
+        "full": {
+          "label": "Tout autoriser",
+          "hint": "Ferme aussi les onglets sans demander. Pour une application web en test automatisé."
+        }
+      }
+    },
+    "language": {
+      "label": "Langue",
+      "followBrowser": "Comme le navigateur ({{name}})",
+      "hint": "Pour cette extension dans ce navigateur."
+    },
+    "theme": {
+      "label": "Thème",
+      "system": "Comme l’ordinateur",
+      "light": "Clair",
+      "dark": "Sombre",
+      "hint": "Pour cette extension dans ce navigateur."
+    }
+  },
+  "pair": {
+    "intro": "Associez ce navigateur à Wysebee. L'association crée un nouvel agent, et seul cet agent peut utiliser ce navigateur.",
+    "nameLabel": "Nom de l'agent",
+    "namePlaceholder": "Assistant de recherche",
+    "nameInvalid": "Saisissez un nom de 1 à 60 caractères, sur une seule ligne.",
+    "pair": "Associer",
+    "starting": "Démarrage…",
+    "codeHelp": "Saisissez ce code dans Wysebee : Appareils → Associer un navigateur",
+    "copy": "Copier le code d’association",
+    "copied": "Copié",
+    "codeFor": "Association sous le nom « {{name}} »",
+    "expiresIn": "Le code expire dans {{time}}",
+    "cancel": "Annuler",
+    "tryAnother": "Essayer un autre nom",
+    "expired": "Le code a expiré avant d'être saisi.",
+    "unpairedNotice": "Ce navigateur a été dissocié dans Wysebee, ou son agent a été supprimé.",
+    "failed": "Impossible de joindre Wysebee à l'adresse {{server}}. Vérifiez votre connexion et réessayez.",
+    "refused": {
+      "name_taken": "Un agent porte déjà ce nom.",
+      "reserved": "Ce nom est réservé.",
+      "too_many": "Vous avez déjà 20 agents. Supprimez-en un dans Wysebee, puis recommencez l'association.",
+      "invalid_name": "Ce nom ne peut pas être utilisé. Il doit commencer par une lettre.",
+      "other": "Wysebee a refusé l'association."
+    }
+  },
+  "link": {
+    "connected": "Connecté à Wysebee",
+    "reconnecting": "Reconnexion…",
+    "agent": "Agent",
+    "turnedOff": "Désactivé",
+    "enabled": "Laisser Wysebee utiliser ce navigateur",
+    "enabledHint": "Wysebee peut utiliser ce navigateur, comme les sites et les autorisations ci-dessous le permettent.",
+    "disabledHint": "Désactivé : Wysebee ne peut pas utiliser ce navigateur et rien ne reste ouvert vers lui. Vous restez associé : réactivez-le pour continuer."
+  },
+  "unpair": {
+    "button": "Dissocier",
+    "confirm": "Dissocier ce navigateur ? L'agent « {{label}} » reste dans Wysebee, sans navigateur.",
+    "yes": "Dissocier",
+    "cancel": "Annuler",
+    "hint": "Wysebee n'utilisera plus ce navigateur. Pour l'utiliser de nouveau, associez-le comme nouvel agent."
+  },
+  "waiting": "En attente de votre réponse"
+}

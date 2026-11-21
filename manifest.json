@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Wysebee Agent",
+  "version": "1.1.0",
+  "description": "Pair this browser with Wysebee as an agent of its own, and let it see and control your tabs - only where and when you allow it.",
+  "minimum_chrome_version": "116",
+  "permissions": ["tabs", "scripting", "storage", "notifications", "alarms", "bookmarks", "debugger", "sidePanel", "offscreen", "downloads"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "icons": { "16": "icon16.png", "32": "icon32.png", "48": "icon48.png", "128": "icon.png" },
+  "side_panel": { "default_path": "ui/sidepanel.html" },
+  "action": {
+    "default_title": "Wysebee Agent",
+    "default_icon": { "16": "icon16.png", "32": "icon32.png", "48": "icon48.png" }
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "approval": {
+    "title": "AI アシスタントがブラウザを使おうとしています",
+    "allowOnce": "今回のみ許可",
+    "alwaysAllow": "常に許可",
+    "alwaysAllowTitle": "{{origin}} では今後確認しない",
+    "deny": "拒否",
+    "nothingWaiting": "確認待ちのものはありません。",
+    "bookmarksOrigin": "あなたのブックマーク",
+    "summary": {
+      "navigate": "{{url}} を開く",
+      "openTab": "{{url}} を新しいタブで開く",
+      "closeTabTitled": "{{origin}} のタブ「{{title}}」を閉じる",
+      "closeTab": "{{origin}} のタブを閉じる",
+      "click": "{{origin}} の要素をクリック",
+      "type": "{{origin}} の入力欄に入力",
+      "scroll": "{{origin}} のページをスクロール",
+      "drag": "{{origin}} の要素をドラッグ",
+      "bookmarksQuery": "ブックマークで「{{query}}」を検索",
+      "bookmarks": "ブックマークを読み取る",
+      "mouseNative": "{{origin}} でマウスを操作（実際の入力）",
+      "mouse": "{{origin}} でマウスを操作",
+      "screenshot": "{{origin}} のスクリーンショットを撮る",
+      "activate": "{{origin}} のタブに切り替える",
+      "read": "{{origin}} のページを読み取る",
+      "console": "{{origin}} のコンソールを読み取る",
+      "network": "{{origin}} のネットワーク通信を読み取る",
+      "evaluate": "{{origin}} で JavaScript を実行：{{code}}",
+      "viewportReset": "{{origin}} のウィンドウサイズを元に戻す",
+      "viewport": "{{origin}} のウィンドウサイズを変更",
+      "inspect": "{{origin}} の要素を検査",
+      "audit": "{{origin}} のページを監査",
+      "performance": "{{origin}} のパフォーマンスを計測",
+      "reload": "{{origin}} のページを再読み込み",
+      "mock": "{{origin}} でネットワーク応答を偽装: {{rules}}",
+      "mockReplace": "{{origin}} の偽装ネットワーク応答を次に置き換え: {{rules}}",
+      "mockClear": "{{origin}} でのネットワーク応答の偽装をやめる",
+      "record": "{{origin}} を録画し、ダウンロードと Wysebee に保存"
+    }
+  },
+  "recording": {
+    "title": "録画を保存しました",
+    "message": "エージェントがこのブラウザで行った操作の画像、アニメーション GIF・WebP、手順の Playwright テストは {{folder}} にあります"
+  },
+  "common": {
+    "checking": "確認しています…",
+    "workerDown": "拡張機能のバックグラウンド処理が応答していません。拡張機能を再読み込みしてください。"
+  },
+  "settings": {
+    "tabs": {
+      "requests": "権限",
+      "sites": "サイト",
+      "language": "言語",
+      "theme": "テーマ"
+    },
+    "requests": {
+      "intro": "ブロックしたリクエストは、信頼済みのサイトも含むすべてのサイトで、確認なしに拒否されます。",
+      "blocked": "ブロック",
+      "allowed": "許可",
+      "blockAria": "ブロック：{{label}}",
+      "bookmarksAllow": "確認なしで許可 — 求められれば、すべてのブックマーク URL を確認なしで渡します。",
+      "bookmarksAllowAria": "ブックマークの読み取りを確認なしで許可",
+      "recordUpload": "各動画を再生用に Wysebee にもアップロードする — タブに表示されたものがすべて映る可能性があります。",
+      "recordUploadAria": "録画を Wysebee にアップロード",
+      "groups": {
+        "reading": "読み取り",
+        "acting": "ページの操作",
+        "tabs": "タブと移動",
+        "devtools": "開発者ツール"
+      },
+      "kinds": {
+        "browser_tabs": {
+          "label": "タブを一覧表示",
+          "hint": "開いているタブのタイトルとサイト。"
+        },
+        "browser_snapshot": {
+          "label": "ページを読み取る",
+          "hint": "ページのテキストと構造。"
+        },
+        "browser_screenshot": {
+          "label": "スクリーンショットを撮る",
+          "hint": "表示中のタブの画像。"
+        },
+        "browser_bookmarks": {
+          "label": "ブックマークを読み取る",
+          "hint": "完全な URL。どのサイトにも属さないため、サイトごとの設定は適用されません。"
+        },
+        "browser_click": {
+          "label": "クリック",
+          "hint": "ページ上の要素をクリック。"
+        },
+        "browser_type": {
+          "label": "入力",
+          "hint": "ページ上の入力欄に入力。"
+        },
+        "browser_scroll": {
+          "label": "スクロール",
+          "hint": "ページや要素をスクロール。"
+        },
+        "browser_drag": {
+          "label": "ドラッグ",
+          "hint": "要素を別の要素の上にドラッグ。"
+        },
+        "browser_mouse": {
+          "label": "マウスを操作",
+          "hint": "押す・動かす・離すを、ページ内でシミュレート。"
+        },
+        "native_input": {
+          "label": "実際の入力でマウスを操作",
+          "hint": "ブラウザーのデバッガー経由で、あなたの操作と区別できません。"
+        },
+        "browser_navigate": {
+          "label": "URL に移動",
+          "hint": "タブの表示先を変更。"
+        },
+        "browser_open_tab": {
+          "label": "タブを開く",
+          "hint": "新しいタブを開く。"
+        },
+        "browser_close_tab": {
+          "label": "タブを閉じる",
+          "hint": "タブを閉じる。"
+        },
+        "browser_activate": {
+          "label": "タブを切り替える",
+          "hint": "タブを前面に表示。"
+        },
+        "browser_console": {
+          "label": "コンソールを読み取る",
+          "hint": "ログ、警告、エラー、捕捉されなかった例外。"
+        },
+        "browser_network": {
+          "label": "ネットワーク通信を読み取る",
+          "hint": "リクエスト、ステータス、所要時間。ログイン用ヘッダーと Cookie は表示されません。"
+        },
+        "browser_network_body": {
+          "label": "レスポンス本文を読み取る",
+          "hint": "リクエストがサーバーから受け取った内容。"
+        },
+        "browser_evaluate": {
+          "label": "JavaScript を実行",
+          "hint": "DevTools のコンソールのように、ページ内でスクリプトを実行。確認画面にスクリプトが表示されます。"
+        },
+        "browser_viewport": {
+          "label": "ウィンドウサイズを変更",
+          "hint": "スマートフォン、タブレット、その他の画面サイズをエミュレート。"
+        },
+        "browser_inspect": {
+          "label": "要素を検査",
+          "hint": "要素のスタイル、サイズ、位置、HTML。"
+        },
+        "browser_audit": {
+          "label": "ページを監査",
+          "hint": "アクセシビリティ、SEO、よくある問題をチェック。"
+        },
+        "browser_performance": {
+          "label": "パフォーマンスを計測",
+          "hint": "読み込み時間、描画、レイアウトのずれ、メモリ。"
+        },
+        "browser_reload": {
+          "label": "ページを再読み込み",
+          "hint": "タブを再読み込み。キャッシュを使わないこともできます。"
+        },
+        "browser_mock": {
+          "label": "ネットワーク応答の偽装",
+          "hint": "指定したリクエストにエラー、作成した応答、または遅延で応え、エラー処理をテストします。サイトがすべて許可でない限り毎回確認します。 オンにするまでオフです。"
+        },
+        "browser_record": {
+          "label": "動画を録画",
+          "hint": "エージェントがシナリオを進める間、タブを録画します。Downloads/Wysebee Agent に保存されます。オンにするまでオフです。"
+        }
+      }
+    },
+    "sites": {
+      "intro": "これらのサイトは確認なしで使用できます。それ以外は先に確認します。操作できるのは http と https のページだけです。",
+      "placeholder": "localhost:3000 または https://example.com",
+      "siteAria": "追加するサイト",
+      "newLevelAria": "新しいサイトのレベル",
+      "add": "サイトを追加",
+      "invalid": "localhost:3000 や example.com のような http または https のサイトを入力してください。",
+      "saveFailed": "追加できるのは http または https のサイトだけです。",
+      "none": "まだありません。上で追加するか、確認画面で「常に許可」を選んでください。",
+      "levelFor": "{{origin}} のレベル",
+      "remove": "削除",
+      "removeOrigin": "{{origin}} を削除",
+      "modes": {
+        "auto": {
+          "label": "信頼済み",
+          "hint": "確認なしで実行します。あなたのタブを閉じるときは確認します。"
+        },
+        "full": {
+          "label": "すべて許可",
+          "hint": "タブも確認なしで閉じます。自動テスト中の Web アプリ向けです。"
+        }
+      }
+    },
+    "language": {
+      "label": "言語",
+      "followBrowser": "ブラウザと同じ（{{name}}）",
+      "hint": "このブラウザのこの拡張機能に適用されます。"
+    },
+    "theme": {
+      "label": "テーマ",
+      "system": "コンピューターと同じ",
+      "light": "ライト",
+      "dark": "ダーク",
+      "hint": "このブラウザのこの拡張機能に適用されます。"
+    }
+  },
+  "pair": {
+    "intro": "このブラウザを Wysebee とペアリングします。ペアリングすると新しいエージェントが作成され、そのエージェントだけがこのブラウザを使用できます。",
+    "nameLabel": "エージェント名",
+    "namePlaceholder": "リサーチアシスタント",
+    "nameInvalid": "1〜60 文字の名前を 1 行で入力してください。",
+    "pair": "ペアリング",
+    "starting": "開始しています…",
+    "codeHelp": "このコードを Wysebee で入力してください：デバイス → ブラウザーをペアリング",
+    "copy": "ペアリングコードをコピー",
+    "copied": "コピーしました",
+    "codeFor": "「{{name}}」としてペアリング中",
+    "expiresIn": "コードの有効期限：あと {{time}}",
+    "cancel": "キャンセル",
+    "tryAnother": "別の名前を試す",
+    "expired": "コードが入力される前に有効期限が切れました。",
+    "unpairedNotice": "このブラウザは Wysebee でペアリングを解除されたか、エージェントが削除されました。",
+    "failed": "{{server}} の Wysebee に接続できませんでした。接続を確認してもう一度お試しください。",
+    "refused": {
+      "name_taken": "その名前のエージェントは既に存在します。",
+      "reserved": "その名前は予約されています。",
+      "too_many": "エージェントは既に 20 個あります。Wysebee で 1 つ削除してから、もう一度ペアリングしてください。",
+      "invalid_name": "その名前は使用できません。文字で始まる必要があります。",
+      "other": "Wysebee がペアリングを拒否しました。"
+    }
+  },
+  "link": {
+    "connected": "Wysebee に接続済み",
+    "reconnecting": "再接続しています…",
+    "agent": "エージェント",
+    "turnedOff": "オフ",
+    "enabled": "Wysebee にこのブラウザーの使用を許可",
+    "enabledHint": "下のサイトと権限の設定の範囲で、Wysebee はこのブラウザーを使えます。",
+    "disabledHint": "オフ:Wysebee はこのブラウザーを使えず、接続も保持されません。ペアリングは残るので、オンに戻せば続けられます。"
+  },
+  "unpair": {
+    "button": "ペアリングを解除",
+    "confirm": "このブラウザのペアリングを解除しますか？エージェント「{{label}}」はブラウザなしで Wysebee に残ります。",
+    "yes": "解除する",
+    "cancel": "キャンセル",
+    "hint": "Wysebee はこのブラウザを使用できなくなります。再び使用するには、新しいエージェントとしてペアリングしてください。"
+  },
+  "waiting": "あなたの回答を待っています"
+}

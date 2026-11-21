@@ -1,0 +1,252 @@
+{
+  "approval": {
+    "title": "An AI assistant wants to use your browser",
+    "allowOnce": "Allow once",
+    "alwaysAllow": "Always allow",
+    "alwaysAllowTitle": "Never ask again for {{origin}}",
+    "deny": "Deny",
+    "nothingWaiting": "Nothing is waiting for you.",
+    "bookmarksOrigin": "Your bookmarks",
+    "summary": {
+      "navigate": "Open {{url}}",
+      "openTab": "Open {{url}} in a new tab",
+      "closeTabTitled": "Close the tab “{{title}}” on {{origin}}",
+      "closeTab": "Close a tab on {{origin}}",
+      "click": "Click an element on {{origin}}",
+      "type": "Type into a field on {{origin}}",
+      "scroll": "Scroll the page on {{origin}}",
+      "drag": "Drag an element on {{origin}}",
+      "bookmarksQuery": "Search your bookmarks for “{{query}}”",
+      "bookmarks": "Read your bookmarks",
+      "mouseNative": "Use the mouse on {{origin}} (real input)",
+      "mouse": "Use the mouse on {{origin}}",
+      "screenshot": "Take a screenshot of {{origin}}",
+      "activate": "Switch to a tab on {{origin}}",
+      "read": "Read the page at {{origin}}",
+      "console": "Read the console on {{origin}}",
+      "network": "Read network activity on {{origin}}",
+      "evaluate": "Run JavaScript on {{origin}}: {{code}}",
+      "viewportReset": "Restore the window size on {{origin}}",
+      "viewport": "Change the window size on {{origin}}",
+      "inspect": "Inspect an element on {{origin}}",
+      "audit": "Audit the page on {{origin}}",
+      "performance": "Measure performance on {{origin}}",
+      "reload": "Reload the page on {{origin}}",
+      "mock": "Fake network responses on {{origin}}: {{rules}}",
+      "mockReplace": "Replace the fake network responses on {{origin}} with: {{rules}}",
+      "mockClear": "Stop faking network responses on {{origin}}",
+      "record": "Record a video of {{origin}}, saved to your Downloads and to Wysebee"
+    }
+  },
+  "recording": {
+    "title": "Recording saved",
+    "message": "Pictures of what the agent did in this browser, an animated GIF and WebP, and a Playwright test of the steps are in {{folder}}"
+  },
+  "common": {
+    "checking": "Checking…",
+    "workerDown": "The extension's background worker is not answering. Reload the extension."
+  },
+  "settings": {
+    "tabs": {
+      "requests": "Permissions",
+      "sites": "Sites",
+      "language": "Language",
+      "theme": "Theme"
+    },
+    "requests": {
+      "intro": "A blocked request is refused on every site, trusted ones included, without asking you.",
+      "blocked": "Blocked",
+      "allowed": "Allowed",
+      "blockAria": "Block: {{label}}",
+      "bookmarksAllow": "Allow without asking — every bookmark URL, on request, with no prompt.",
+      "bookmarksAllowAria": "Allow reading bookmarks without asking",
+      "recordUpload": "Also upload each video to Wysebee for replay — it can show anything on the tab.",
+      "recordUploadAria": "Upload recordings to Wysebee",
+      "groups": {
+        "reading": "Reading",
+        "acting": "Acting on pages",
+        "tabs": "Tabs and navigation",
+        "devtools": "Developer tools"
+      },
+      "kinds": {
+        "browser_tabs": {
+          "label": "List your tabs",
+          "hint": "Titles and sites of open tabs."
+        },
+        "browser_snapshot": {
+          "label": "Read pages",
+          "hint": "The text and structure of a page."
+        },
+        "browser_screenshot": {
+          "label": "Take screenshots",
+          "hint": "An image of the visible tab."
+        },
+        "browser_bookmarks": {
+          "label": "Read bookmarks",
+          "hint": "Full URLs, and not covered by any site's level — they belong to no site."
+        },
+        "browser_click": {
+          "label": "Click",
+          "hint": "Click an element on a page."
+        },
+        "browser_type": {
+          "label": "Type",
+          "hint": "Type into a field on a page."
+        },
+        "browser_scroll": {
+          "label": "Scroll",
+          "hint": "Scroll a page or an element."
+        },
+        "browser_drag": {
+          "label": "Drag",
+          "hint": "Drag one element onto another."
+        },
+        "browser_mouse": {
+          "label": "Use the mouse",
+          "hint": "Press, move and release, simulated in the page."
+        },
+        "native_input": {
+          "label": "Use the mouse with real input",
+          "hint": "Through the browser's debugger, indistinguishable from you."
+        },
+        "browser_navigate": {
+          "label": "Go to a URL",
+          "hint": "Change where a tab is."
+        },
+        "browser_open_tab": {
+          "label": "Open tabs",
+          "hint": "Open a new tab."
+        },
+        "browser_close_tab": {
+          "label": "Close tabs",
+          "hint": "Close a tab."
+        },
+        "browser_activate": {
+          "label": "Switch tabs",
+          "hint": "Bring a tab to the front."
+        },
+        "browser_console": {
+          "label": "Read the console",
+          "hint": "Logs, warnings, errors and uncaught exceptions."
+        },
+        "browser_network": {
+          "label": "Read network activity",
+          "hint": "Requests, statuses and timings. Sign-in headers and cookies are hidden."
+        },
+        "browser_network_body": {
+          "label": "Read response bodies",
+          "hint": "What a request got back from the server."
+        },
+        "browser_evaluate": {
+          "label": "Run JavaScript",
+          "hint": "Run script in the page, as in the DevTools console. The prompt shows the script."
+        },
+        "browser_viewport": {
+          "label": "Change the window size",
+          "hint": "Emulate a phone, tablet or another screen size."
+        },
+        "browser_inspect": {
+          "label": "Inspect elements",
+          "hint": "Styles, size, position and HTML of an element."
+        },
+        "browser_audit": {
+          "label": "Audit pages",
+          "hint": "Check accessibility, SEO and common mistakes."
+        },
+        "browser_performance": {
+          "label": "Measure performance",
+          "hint": "Load timings, paints, layout shift and memory."
+        },
+        "browser_reload": {
+          "label": "Reload pages",
+          "hint": "Reload a tab, optionally skipping the cache."
+        },
+        "browser_mock": {
+          "label": "Fake network responses",
+          "hint": "Answer chosen requests with an error, a made-up reply or a delay, to test error handling. Asks every time unless the site allows everything. Off until you turn it on."
+        },
+        "browser_record": {
+          "label": "Record videos",
+          "hint": "Film a tab while the agent works through a scenario. Saved to Downloads/Wysebee Agent. Off until you turn it on."
+        }
+      }
+    },
+    "sites": {
+      "intro": "These sites may be used without asking. Everything else asks you first. Only http and https pages can be controlled.",
+      "placeholder": "localhost:3000 or https://example.com",
+      "siteAria": "Site to add",
+      "newLevelAria": "Level for the new site",
+      "add": "Add site",
+      "invalid": "Enter an http or https site, such as localhost:3000 or example.com.",
+      "saveFailed": "Only an http or https site can be added.",
+      "none": "None yet. Add one above, or choose “Always allow” on a prompt.",
+      "levelFor": "Level for {{origin}}",
+      "remove": "Remove",
+      "removeOrigin": "Remove {{origin}}",
+      "modes": {
+        "auto": {
+          "label": "Trusted",
+          "hint": "Runs without asking; closing one of your tabs still asks."
+        },
+        "full": {
+          "label": "Allow everything",
+          "hint": "Also closes tabs without asking. For a web app under automated test."
+        }
+      }
+    },
+    "language": {
+      "label": "Language",
+      "followBrowser": "Same as the browser ({{name}})",
+      "hint": "For this extension in this browser."
+    },
+    "theme": {
+      "label": "Theme",
+      "system": "Same as the computer",
+      "light": "Light",
+      "dark": "Dark",
+      "hint": "For this extension in this browser."
+    }
+  },
+  "pair": {
+    "intro": "Pair this browser with Wysebee. Pairing creates a new agent, and only that agent can use this browser.",
+    "nameLabel": "Agent name",
+    "namePlaceholder": "Research helper",
+    "nameInvalid": "Enter a name of 1 to 60 characters, on one line.",
+    "pair": "Pair",
+    "starting": "Starting…",
+    "codeHelp": "Type this code in Wysebee: Devices → Pair a browser",
+    "copy": "Copy pairing code",
+    "copied": "Copied",
+    "codeFor": "Pairing as “{{name}}”",
+    "expiresIn": "The code expires in {{time}}",
+    "cancel": "Cancel",
+    "tryAnother": "Try another name",
+    "expired": "The code ran out before anyone typed it.",
+    "unpairedNotice": "This browser was unpaired in Wysebee, or its agent was deleted.",
+    "failed": "Wysebee could not be reached at {{server}}. Check your connection and try again.",
+    "refused": {
+      "name_taken": "An agent already has that name.",
+      "reserved": "That name is reserved.",
+      "too_many": "You already have 20 agents. Delete one in Wysebee, then pair again.",
+      "invalid_name": "That name cannot be used. It needs to start with a letter.",
+      "other": "Wysebee refused the pairing."
+    }
+  },
+  "link": {
+    "connected": "Connected to Wysebee",
+    "reconnecting": "Reconnecting…",
+    "agent": "Agent",
+    "turnedOff": "Turned off",
+    "enabled": "Let Wysebee use this browser",
+    "enabledHint": "Wysebee can use this browser, as the sites and permissions below allow.",
+    "disabledHint": "Off: Wysebee cannot use this browser and nothing is kept open to it. You stay paired: switch it back on to carry on."
+  },
+  "unpair": {
+    "button": "Unpair",
+    "confirm": "Unpair this browser? The agent “{{label}}” stays in Wysebee, without a browser.",
+    "yes": "Unpair",
+    "cancel": "Cancel",
+    "hint": "Stops Wysebee using this browser. To use it again, pair it as a new agent."
+  },
+  "waiting": "Waiting for you"
+}

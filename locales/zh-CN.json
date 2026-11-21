@@ -1,0 +1,252 @@
+{
+  "approval": {
+    "title": "一个 AI 助手想要使用你的浏览器",
+    "allowOnce": "允许一次",
+    "alwaysAllow": "始终允许",
+    "alwaysAllowTitle": "以后不再为 {{origin}} 询问",
+    "deny": "拒绝",
+    "nothingWaiting": "没有等待你处理的请求。",
+    "bookmarksOrigin": "你的书签",
+    "summary": {
+      "navigate": "打开 {{url}}",
+      "openTab": "在新标签页中打开 {{url}}",
+      "closeTabTitled": "关闭 {{origin}} 上的标签页“{{title}}”",
+      "closeTab": "关闭 {{origin}} 上的一个标签页",
+      "click": "点击 {{origin}} 上的一个元素",
+      "type": "在 {{origin}} 上的输入框中输入",
+      "scroll": "滚动 {{origin}} 上的页面",
+      "drag": "拖动 {{origin}} 上的一个元素",
+      "bookmarksQuery": "在你的书签中搜索“{{query}}”",
+      "bookmarks": "读取你的书签",
+      "mouseNative": "在 {{origin}} 上使用鼠标（真实输入）",
+      "mouse": "在 {{origin}} 上使用鼠标",
+      "screenshot": "截取 {{origin}} 的屏幕截图",
+      "activate": "切换到 {{origin}} 上的标签页",
+      "read": "读取 {{origin}} 上的页面",
+      "console": "读取 {{origin}} 上的控制台",
+      "network": "读取 {{origin}} 上的网络活动",
+      "evaluate": "在 {{origin}} 上运行 JavaScript：{{code}}",
+      "viewportReset": "恢复 {{origin}} 的窗口尺寸",
+      "viewport": "更改 {{origin}} 的窗口尺寸",
+      "inspect": "检查 {{origin}} 上的一个元素",
+      "audit": "审核 {{origin}} 上的页面",
+      "performance": "测量 {{origin}} 的性能",
+      "reload": "重新加载 {{origin}} 上的页面",
+      "mock": "在 {{origin}} 上模拟网络响应：{{rules}}",
+      "mockReplace": "将 {{origin}} 上的模拟网络响应替换为：{{rules}}",
+      "mockClear": "停止在 {{origin}} 上模拟网络响应",
+      "record": "录制 {{origin}} 的视频，保存到“下载”和 Wysebee"
+    }
+  },
+  "recording": {
+    "title": "录制已保存",
+    "message": "智能体在此浏览器中操作的图片、动画 GIF 和 WebP，以及这些步骤的 Playwright 测试保存在 {{folder}}"
+  },
+  "common": {
+    "checking": "正在检查…",
+    "workerDown": "扩展的后台进程没有响应。请重新加载扩展。"
+  },
+  "settings": {
+    "tabs": {
+      "requests": "权限",
+      "sites": "网站",
+      "language": "语言",
+      "theme": "主题"
+    },
+    "requests": {
+      "intro": "被阻止的请求会在所有网站上被直接拒绝，包括受信任的网站，不会询问你。",
+      "blocked": "已阻止",
+      "allowed": "已允许",
+      "blockAria": "阻止：{{label}}",
+      "bookmarksAllow": "无需询问即允许 — 收到请求时直接提供所有书签网址，不弹出确认。",
+      "bookmarksAllowAria": "允许无需询问即读取书签",
+      "recordUpload": "同时将每个视频上传到 Wysebee 以便回放 — 视频可能包含标签页上的任何内容。",
+      "recordUploadAria": "将录制上传到 Wysebee",
+      "groups": {
+        "reading": "读取",
+        "acting": "操作页面",
+        "tabs": "标签页和导航",
+        "devtools": "开发者工具"
+      },
+      "kinds": {
+        "browser_tabs": {
+          "label": "列出你的标签页",
+          "hint": "已打开标签页的标题和网站。"
+        },
+        "browser_snapshot": {
+          "label": "读取页面",
+          "hint": "页面的文字和结构。"
+        },
+        "browser_screenshot": {
+          "label": "截取屏幕截图",
+          "hint": "当前可见标签页的图像。"
+        },
+        "browser_bookmarks": {
+          "label": "读取书签",
+          "hint": "完整网址，不受任何网站级别的约束 — 书签不属于任何网站。"
+        },
+        "browser_click": {
+          "label": "点击",
+          "hint": "点击页面上的元素。"
+        },
+        "browser_type": {
+          "label": "输入",
+          "hint": "在页面上的输入框中输入。"
+        },
+        "browser_scroll": {
+          "label": "滚动",
+          "hint": "滚动页面或某个元素。"
+        },
+        "browser_drag": {
+          "label": "拖动",
+          "hint": "把一个元素拖到另一个元素上。"
+        },
+        "browser_mouse": {
+          "label": "使用鼠标",
+          "hint": "按下、移动和松开，在页面中模拟。"
+        },
+        "native_input": {
+          "label": "以真实输入使用鼠标",
+          "hint": "通过浏览器的调试器，与你本人的操作无法区分。"
+        },
+        "browser_navigate": {
+          "label": "前往某个网址",
+          "hint": "更改标签页所在的位置。"
+        },
+        "browser_open_tab": {
+          "label": "打开标签页",
+          "hint": "打开一个新标签页。"
+        },
+        "browser_close_tab": {
+          "label": "关闭标签页",
+          "hint": "关闭一个标签页。"
+        },
+        "browser_activate": {
+          "label": "切换标签页",
+          "hint": "把一个标签页切换到前台。"
+        },
+        "browser_console": {
+          "label": "读取控制台",
+          "hint": "日志、警告、错误和未捕获的异常。"
+        },
+        "browser_network": {
+          "label": "读取网络活动",
+          "hint": "请求、状态和耗时。登录请求头和 Cookie 会被隐藏。"
+        },
+        "browser_network_body": {
+          "label": "读取响应内容",
+          "hint": "请求从服务器收到的内容。"
+        },
+        "browser_evaluate": {
+          "label": "运行 JavaScript",
+          "hint": "像在 DevTools 控制台中一样，在页面中运行脚本。确认提示会显示脚本内容。"
+        },
+        "browser_viewport": {
+          "label": "更改窗口尺寸",
+          "hint": "模拟手机、平板或其他屏幕尺寸。"
+        },
+        "browser_inspect": {
+          "label": "检查元素",
+          "hint": "元素的样式、尺寸、位置和 HTML。"
+        },
+        "browser_audit": {
+          "label": "审核页面",
+          "hint": "检查无障碍、SEO 和常见问题。"
+        },
+        "browser_performance": {
+          "label": "测量性能",
+          "hint": "加载耗时、绘制、布局偏移和内存。"
+        },
+        "browser_reload": {
+          "label": "重新加载页面",
+          "hint": "重新加载标签页，可选择跳过缓存。"
+        },
+        "browser_mock": {
+          "label": "模拟网络响应",
+          "hint": "用错误、自定义响应或延迟回应选定的请求，以测试错误处理。除非网站允许全部操作，否则每次都会询问。在您开启之前保持关闭。"
+        },
+        "browser_record": {
+          "label": "录制视频",
+          "hint": "在代理执行场景时录制标签页。保存到 Downloads/Wysebee Agent。在您开启之前保持关闭。"
+        }
+      }
+    },
+    "sites": {
+      "intro": "这些网站无需询问即可使用。其他网站都会先询问你。只有 http 和 https 页面可以被操控。",
+      "placeholder": "localhost:3000 或 https://example.com",
+      "siteAria": "要添加的网站",
+      "newLevelAria": "新网站的级别",
+      "add": "添加网站",
+      "invalid": "请输入 http 或 https 网站，例如 localhost:3000 或 example.com。",
+      "saveFailed": "只能添加 http 或 https 网站。",
+      "none": "还没有。请在上方添加，或在确认提示中选择“始终允许”。",
+      "levelFor": "{{origin}} 的级别",
+      "remove": "移除",
+      "removeOrigin": "移除 {{origin}}",
+      "modes": {
+        "auto": {
+          "label": "受信任",
+          "hint": "无需询问即可运行；关闭你自己的标签页仍会询问。"
+        },
+        "full": {
+          "label": "允许所有操作",
+          "hint": "关闭标签页也无需询问。适用于正在自动化测试的 Web 应用。"
+        }
+      }
+    },
+    "language": {
+      "label": "语言",
+      "followBrowser": "与浏览器相同（{{name}}）",
+      "hint": "仅用于此浏览器中的此扩展。"
+    },
+    "theme": {
+      "label": "主题",
+      "system": "与电脑相同",
+      "light": "浅色",
+      "dark": "深色",
+      "hint": "仅用于此浏览器中的此扩展。"
+    }
+  },
+  "pair": {
+    "intro": "将此浏览器与 Wysebee 配对。配对会创建一个新的智能体，并且只有该智能体可以使用此浏览器。",
+    "nameLabel": "智能体名称",
+    "namePlaceholder": "研究助手",
+    "nameInvalid": "请输入 1 到 60 个字符的名称，不能换行。",
+    "pair": "配对",
+    "starting": "正在开始…",
+    "codeHelp": "在 Wysebee 中输入此代码：设备 → 配对浏览器",
+    "copy": "复制配对代码",
+    "copied": "已复制",
+    "codeFor": "正在以“{{name}}”配对",
+    "expiresIn": "代码将在 {{time}} 后过期",
+    "cancel": "取消",
+    "tryAnother": "换一个名称",
+    "expired": "代码在输入之前已过期。",
+    "unpairedNotice": "此浏览器已在 Wysebee 中取消配对，或其智能体已被删除。",
+    "failed": "无法连接到 {{server}} 的 Wysebee。请检查网络连接后重试。",
+    "refused": {
+      "name_taken": "已有智能体使用该名称。",
+      "reserved": "该名称已被保留。",
+      "too_many": "你已有 20 个智能体。请在 Wysebee 中删除一个，然后重新配对。",
+      "invalid_name": "该名称无法使用。名称需要以字母开头。",
+      "other": "Wysebee 拒绝了配对。"
+    }
+  },
+  "link": {
+    "connected": "已连接到 Wysebee",
+    "reconnecting": "正在重新连接…",
+    "agent": "智能体",
+    "turnedOff": "已关闭",
+    "enabled": "允许 Wysebee 使用此浏览器",
+    "enabledHint": "Wysebee 可以按下方站点和权限的设置使用此浏览器。",
+    "disabledHint": "已关闭:Wysebee 无法使用此浏览器,也不会保持与它的连接。配对仍然保留,重新开启即可继续。"
+  },
+  "unpair": {
+    "button": "取消配对",
+    "confirm": "要取消此浏览器的配对吗？智能体“{{label}}”会保留在 Wysebee 中，但没有浏览器。",
+    "yes": "取消配对",
+    "cancel": "取消",
+    "hint": "Wysebee 将不再使用此浏览器。要再次使用，请将其配对为新的智能体。"
+  },
+  "waiting": "等待你的回应"
+}
