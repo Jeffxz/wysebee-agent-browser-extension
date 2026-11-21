@@ -51,7 +51,8 @@
       "requests": "Autorisations",
       "sites": "Sites",
       "language": "Langue",
-      "theme": "Thème"
+      "theme": "Thème",
+      "server": "Serveur"
     },
     "requests": {
       "intro": "Une demande bloquée est refusée sur tous les sites, y compris ceux de confiance, sans vous demander.",
@@ -205,6 +206,20 @@
       "light": "Clair",
       "dark": "Sombre",
       "hint": "Pour cette extension dans ce navigateur."
+    },
+    "server": {
+      "label": "Serveur Wysebee Cloud",
+      "intro": "Le Wysebee Cloud avec lequel ce navigateur est associé. Pour utiliser un Wysebee auto-hébergé, saisissez son adresse ici, puis associez.",
+      "placeholder": "https://wysebee.example.com",
+      "save": "Enregistrer",
+      "hint": "Une adresse https, ou http pour cet ordinateur ou un réseau privé (localhost, 10.x, 172.16–31.x, 192.168.x, .local).",
+      "invalid": "Saisissez une adresse https, par exemple https://wysebee.example.com. Le http simple est réservé à cet ordinateur ou à un réseau privé.",
+      "saveFailed": "Le serveur n’a pas pu être enregistré.",
+      "isDefault": "C’est le serveur par défaut.",
+      "useDefault": "Utiliser le serveur par défaut ({{server}})",
+      "confirm": "Une association appartient à son serveur : passer à {{server}} dissocie ce navigateur. Associez-le de nouveau ensuite.",
+      "confirmYes": "Changer et dissocier",
+      "cancel": "Annuler"
     }
   },
   "pair": {
@@ -230,7 +245,8 @@
       "too_many": "Vous avez déjà 20 agents. Supprimez-en un dans Wysebee, puis recommencez l'association.",
       "invalid_name": "Ce nom ne peut pas être utilisé. Il doit commencer par une lettre.",
       "other": "Wysebee a refusé l'association."
-    }
+    },
+    "server": "Serveur : {{server}}"
   },
   "link": {
     "connected": "Connecté à Wysebee",
@@ -239,7 +255,8 @@
     "turnedOff": "Désactivé",
     "enabled": "Laisser Wysebee utiliser ce navigateur",
     "enabledHint": "Wysebee peut utiliser ce navigateur, comme les sites et les autorisations ci-dessous le permettent.",
-    "disabledHint": "Désactivé : Wysebee ne peut pas utiliser ce navigateur et rien ne reste ouvert vers lui. Vous restez associé : réactivez-le pour continuer."
+    "disabledHint": "Désactivé : Wysebee ne peut pas utiliser ce navigateur et rien ne reste ouvert vers lui. Vous restez associé : réactivez-le pour continuer.",
+    "server": "Sur {{server}}"
   },
   "unpair": {
     "button": "Dissocier",

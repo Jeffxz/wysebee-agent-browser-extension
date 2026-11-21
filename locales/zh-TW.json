@@ -51,7 +51,8 @@
       "requests": "權限",
       "sites": "網站",
       "language": "語言",
-      "theme": "主題"
+      "theme": "主題",
+      "server": "伺服器"
     },
     "requests": {
       "intro": "被封鎖的請求會在所有網站上被直接拒絕，包括受信任的網站，不會詢問你。",
@@ -205,6 +206,20 @@
       "light": "淺色",
       "dark": "深色",
       "hint": "僅適用於此瀏覽器中的此擴充功能。"
+    },
+    "server": {
+      "label": "Wysebee Cloud 伺服器",
+      "intro": "此瀏覽器配對的 Wysebee Cloud。若要使用自架的 Wysebee，請在此輸入其位址，然後配對。",
+      "placeholder": "https://wysebee.example.com",
+      "save": "儲存",
+      "hint": "https 位址，或用於本機或私人網路的 http 位址（localhost、10.x、172.16–31.x、192.168.x、.local）。",
+      "invalid": "請輸入 https 位址，例如 https://wysebee.example.com。純 http 僅限本機或私人網路。",
+      "saveFailed": "無法儲存伺服器。",
+      "isDefault": "這是預設伺服器。",
+      "useDefault": "使用預設伺服器（{{server}}）",
+      "confirm": "配對屬於其伺服器：改為 {{server}} 會解除此瀏覽器的配對。之後請重新配對。",
+      "confirmYes": "變更並解除配對",
+      "cancel": "取消"
     }
   },
   "pair": {
@@ -230,7 +245,8 @@
       "too_many": "你已有 20 個代理。請在 Wysebee 中刪除一個，然後重新配對。",
       "invalid_name": "該名稱無法使用。名稱需要以字母開頭。",
       "other": "Wysebee 拒絕了配對。"
-    }
+    },
+    "server": "伺服器：{{server}}"
   },
   "link": {
     "connected": "已連線到 Wysebee",
@@ -239,7 +255,8 @@
     "turnedOff": "已關閉",
     "enabled": "允許 Wysebee 使用此瀏覽器",
     "enabledHint": "Wysebee 可以依下方網站和權限的設定使用此瀏覽器。",
-    "disabledHint": "已關閉:Wysebee 無法使用此瀏覽器,也不會保持與它的連線。配對仍然保留,重新開啟即可繼續。"
+    "disabledHint": "已關閉:Wysebee 無法使用此瀏覽器,也不會保持與它的連線。配對仍然保留,重新開啟即可繼續。",
+    "server": "位於 {{server}}"
   },
   "unpair": {
     "button": "取消配對",
