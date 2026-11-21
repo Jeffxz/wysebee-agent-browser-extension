@@ -3,6 +3,7 @@
 //   node scripts/build.mjs            # dist/prod
 //   node scripts/build.mjs prod       # dist/prod
 //   node scripts/build.mjs local <server URL>   # dist/local, for development
+//   WYSEBEE_CLOUD_URL=<server URL> node scripts/build.mjs local   # the same
 //
 // Each build is a copy of what the extension ships (no tests, no docs) with server.js
 // rewritten to its cloud: the server it talks to unless the person sets a self-hosted one
@@ -28,7 +29,16 @@ export const BUILDS = {
 /** The local build: for development, against the server it is built with. */
 export const LOCAL = { name: "Wysebee Agent Local" };
 
-const LOCAL_USAGE = "Usage: node scripts/build.mjs local <server URL>, e.g. http://localhost:8000";
+/**
+ * The environment variable the local build's server can come from instead of the command
+ * line, named as Wysebee Desktop's (WYSEBEE_CLOUD_URL=http://localhost:8001). Only the
+ * local build reads it: prod's server is fixed.
+ */
+export const CLOUD_URL_VAR = "WYSEBEE_CLOUD_URL";
+
+const LOCAL_USAGE =
+  `Usage: node scripts/build.mjs local <server URL>, or ${CLOUD_URL_VAR}=<server URL> node scripts/build.mjs local; ` +
+  "e.g. http://localhost:8000";
 
 /**
  * A local build's server: an http or https URL, with no user, query or fragment, given as
@@ -188,13 +198,15 @@ export function recolourPng(png, [a, b] = [0, 2]) {
 
 /**
  * The command line: build each env asked for (prod when none is), saying where,
- * relative to `cwd`. `local` is built alone, with the server that follows it.
+ * relative to `cwd`. `local` is built alone, with the server that follows it, else the one
+ * in WYSEBEE_CLOUD_URL (the command line wins when both are given).
  */
-export function main(asked, { outOf = (env) => path.join(ROOT, "dist", env), log = console.log, cwd = process.cwd() } = {}) {
+export function main(asked, { outOf = (env) => path.join(ROOT, "dist", env), log = console.log, cwd = process.cwd(), env = process.env } = {}) {
   if (asked[0] === "local") {
-    if (asked.length !== 2) throw new Error(LOCAL_USAGE);
-    const out = build("local", outOf("local"), asked[1]);
-    log(`local: ${path.relative(cwd, out) || "."} -> ${localServer(asked[1])}`);
+    const server = asked[1] ?? (env[CLOUD_URL_VAR] || undefined);
+    if (asked.length > 2 || server === undefined) throw new Error(LOCAL_USAGE);
+    const out = build("local", outOf("local"), server);
+    log(`local: ${path.relative(cwd, out) || "."} -> ${localServer(server)}`);
     return;
   }
   for (const env of asked.length ? asked : Object.keys(BUILDS)) {
