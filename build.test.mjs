@@ -9,7 +9,7 @@ import path from "node:path";
 import zlib from "node:zlib";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { BUILDS, LOCAL, build, decodePng, encodePng, localServer, main, recolourPng } from "./scripts/build.mjs";
+import { BUILDS, CLOUD_URL_VAR, LOCAL, build, decodePng, encodePng, localServer, main, recolourPng } from "./scripts/build.mjs";
 import { SERVER as SOURCE_SERVER, ENV as SOURCE_ENV } from "./server.js";
 
 const built = {};
@@ -216,11 +216,35 @@ test("the command line builds what it is asked for, or every build, and says whe
   assert.deepEqual(logged, [`prod: . -> ${BUILDS.prod.server}`]);
   // local, alone, with its server.
   logged.length = 0;
-  main(["local", "http://localhost:8000/"], { outOf, log, cwd: tmp });
+  main(["local", "http://localhost:8000/"], { outOf, log, cwd: tmp, env: {} });
   assert.deepEqual(logged, [`local: ${path.join("cli", "local")} -> http://localhost:8000`]);
   for (const bad of [["local"], ["local", "http://localhost:8000", "prod"]]) {
-    assert.throws(() => main(bad, { outOf, log, cwd: tmp }), /Usage: node scripts\/build\.mjs local <server URL>/);
+    assert.throws(() => main(bad, { outOf, log, cwd: tmp, env: {} }), /Usage: node scripts\/build\.mjs local <server URL>/);
   }
+  // An empty WYSEBEE_CLOUD_URL is no server.
+  assert.throws(() => main(["local"], { outOf, log, cwd: tmp, env: { WYSEBEE_CLOUD_URL: "" } }), /WYSEBEE_CLOUD_URL=<server URL>/);
+});
+
+test("the local build's server can come from WYSEBEE_CLOUD_URL, as Wysebee Desktop's does", async () => {
+  assert.equal(CLOUD_URL_VAR, "WYSEBEE_CLOUD_URL");
+  const logged = [];
+  const log = (line) => logged.push(line);
+  const outOf = (env) => path.join(tmp, "cli-env", env);
+  main(["local"], { outOf, log, cwd: tmp, env: { WYSEBEE_CLOUD_URL: "http://localhost:8001/" } });
+  assert.deepEqual(logged, [`local: ${path.join("cli-env", "local")} -> http://localhost:8001`]);
+  const { SERVER, ENV } = await import(path.join(outOf("local"), "server.js"));
+  assert.equal(SERVER, "http://localhost:8001");
+  assert.equal(ENV, "local");
+  // The command line wins over the variable.
+  logged.length = 0;
+  main(["local", "http://192.168.1.20:8000"], { outOf, log, cwd: tmp, env: { WYSEBEE_CLOUD_URL: "http://localhost:8001" } });
+  assert.deepEqual(logged, [`local: ${path.join("cli-env", "local")} -> http://192.168.1.20:8000`]);
+  // A bad one is refused like a typed one.
+  assert.throws(() => main(["local"], { outOf, log, cwd: tmp, env: { WYSEBEE_CLOUD_URL: "localhost:8001" } }), /not http or https/);
+  // prod never reads it: its server is fixed.
+  logged.length = 0;
+  main(["prod"], { outOf, log, cwd: tmp, env: { WYSEBEE_CLOUD_URL: "http://localhost:8001" } });
+  assert.deepEqual(logged, [`prod: ${path.join("cli-env", "prod")} -> ${BUILDS.prod.server}`]);
 });
 
 test("run as a script, an unknown build is refused before anything is written", () => {

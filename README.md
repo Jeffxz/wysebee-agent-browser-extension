@@ -27,7 +27,12 @@ with no rebuild. There is one published build, and a local one for development:
 node scripts/build.mjs          # or: npm run build   -> dist/prod
 node scripts/build.mjs prod     # dist/prod
 node scripts/build.mjs local http://localhost:8000   # dist/local
+WYSEBEE_CLOUD_URL=http://localhost:8001 npm run build:local   # dist/local, the same way
 ```
+
+The local build's server can come from `WYSEBEE_CLOUD_URL`, the variable Wysebee Desktop
+reads, instead of the command line (which wins when both are given). Only the local build
+reads it: prod always talks to `https://app.wysebee.com`.
 
 The script copies what the extension ships (no tests or docs) into `dist/<build>` and
 writes the server into its `server.js`; for local it also renames the extension
