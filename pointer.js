@@ -20,10 +20,14 @@ export const CARET_MS = 1500;
 // plus its 8 ms pause), bounded so a long stroke never leaves the dot behind for long.
 const MS_PER_SEGMENT = 12;
 const MAX_STROKE_MS = 6000;
-// The dot glides from where it was to where the next action starts, so the eye can
-// follow it; background.js waits this long before acting, so the action lands as the
-// dot arrives.
-export const GLIDE_MS = 180;
+// The dot glides from where it was to where the next action starts the way a hand moves
+// a mouse, so the eye can follow it: a short hop is quick and a long reach slower
+// (about Fitts's law: `minMs` plus `msPerDoubling` for each doubling of the distance
+// over 16 px, at most `maxMs`), along a slight arc (bowed sideways by `arc` of the
+// distance, at most `maxArcPx`), speeding up and then slowing as it lands.
+// page.overlay draws it from this; background.js waits for the glide (its `lead`)
+// before acting, so the action lands as the dot arrives.
+export const GLIDE = Object.freeze({ minMs: 280, maxMs: 1100, msPerDoubling: 120, arc: 0.1, maxArcPx: 60 });
 // A drag held down from its source to its target: about as long as page.drag takes.
 const DRAG_MS = 450;
 // A scroll is shown as a short drag in its direction, from the middle of what scrolls.
@@ -43,8 +47,9 @@ const finite = (p) => Array.isArray(p) && p.length === 2 && p.every(Number.isFin
  * The overlay command for one mouse action whose point (or path) is already resolved
  * to CSS pixels of the viewport.
  *
- * Every command is `{points, glideMs, ms, hold, pulses, pressed}`: the dot glides to
- * the first of `points` over `glideMs`, then travels through the rest over `ms`. A
+ * Every command is `{points, glide, ms, hold, pulses, pressed}`: the dot glides to
+ * the first of `points` as `glide` says (GLIDE; null: it is put there at once), then
+ * travels through the rest over `ms`. A
  * `hold` command is pressed for that travel (a stroke, a drag, a scroll) and pulses
  * as the button goes down and comes up; any other pulses `pulses` times on arrival (a
  * click once, a double click twice, a press or a release once) and leaves a button
@@ -55,10 +60,10 @@ export function pointerCommand(action, loc) {
   if (!loc) return null;
   if (action === "path") {
     if (!Array.isArray(loc.points) || loc.points.length < 2) return null;
-    return { points: loc.points, glideMs: GLIDE_MS, ms: strokeMs(loc.points), hold: true, pulses: 0, pressed: false };
+    return { points: loc.points, glide: GLIDE, ms: strokeMs(loc.points), hold: true, pulses: 0, pressed: false };
   }
   if (!Number.isFinite(loc.x) || !Number.isFinite(loc.y)) return null;
-  const at = { points: [[loc.x, loc.y]], glideMs: GLIDE_MS, ms: 0, hold: false };
+  const at = { points: [[loc.x, loc.y]], glide: GLIDE, ms: 0, hold: false };
   switch (action) {
     case "click":
       return { ...at, pulses: 1, pressed: false };
@@ -78,13 +83,13 @@ export function pointerCommand(action, loc) {
 
 /** The command for a click on a snapshot ref: page.overlay finds the element's centre. */
 export function refClickCommand(ref) {
-  return { ref: String(ref), points: null, glideMs: GLIDE_MS, ms: 0, hold: false, pulses: 1, pressed: false };
+  return { ref: String(ref), points: null, glide: GLIDE, ms: 0, hold: false, pulses: 1, pressed: false };
 }
 
 /** A drag (page.drag's dry run: `from`, `to`): pressed at the source, released on the target. */
 export function dragCommand(plan) {
   if (!plan || !finite(plan.from) || !finite(plan.to)) return null;
-  return { points: [plan.from, plan.to], glideMs: GLIDE_MS, ms: DRAG_MS, hold: true, pulses: 0, pressed: false };
+  return { points: [plan.from, plan.to], glide: GLIDE, ms: DRAG_MS, hold: true, pulses: 0, pressed: false };
 }
 
 /**
@@ -95,7 +100,7 @@ export function scrollCommand(plan, direction) {
   const dir = SWIPE[direction];
   if (!plan || !dir || !Number.isFinite(plan.x) || !Number.isFinite(plan.y)) return null;
   const to = [plan.x + dir[0] * SCROLL_SWIPE_PX, plan.y + dir[1] * SCROLL_SWIPE_PX];
-  return { points: [[plan.x, plan.y], to], glideMs: GLIDE_MS, ms: SCROLL_MS, hold: true, pulses: 0, pressed: false };
+  return { points: [[plan.x, plan.y], to], glide: GLIDE, ms: SCROLL_MS, hold: true, pulses: 0, pressed: false };
 }
 
 /**
@@ -107,7 +112,7 @@ export function restoreCommand(last, now) {
   if (!last || !finite(last.point) || !Number.isFinite(last.at)) return null;
   const idleMs = IDLE_MS - (now - last.at);
   if (idleMs <= 0) return null;
-  return { points: [last.point], glideMs: 0, ms: 0, hold: false, pulses: 0, pressed: null, idleMs };
+  return { points: [last.point], glide: null, ms: 0, hold: false, pulses: 0, pressed: null, idleMs };
 }
 
 /** The command that takes the dot (and any caret) off the page at once. */

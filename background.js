@@ -34,6 +34,7 @@ import {
 import * as devpage from "./devpage.js";
 import { fitScreenshot } from "./screenshot.js";
 import {
+  GLIDE,
   IDLE_MS,
   caretCommand,
   dragCommand,
@@ -492,7 +493,15 @@ async function stopVideo(tabId, callId, why) {
   if (!rec) return null;
   videos.delete(tabId);
   await videoCdp(tabId, "Page.stopScreencast").catch(() => {});
-  if (attached.has(tabId)) {
+  if (why === "stopped" || why === "idle") {
+    // The scenario is over — the agent said so, or stopped acting long ago: leave the
+    // page as the person had it. The dot goes, and the debugger lets go of the tab at
+    // once, so Chrome's "started debugging this browser" bar closes rather than staying
+    // its idle time (minutes, once the console or network was read). Anything the agent
+    // does next attaches again as it needs.
+    hidePointer(tabId);
+    if (attached.has(tabId)) void detachDebugger(tabId);
+  } else if (attached.has(tabId)) {
     // The debugger no longer needs to stay for the recording: back to its usual idle time.
     clearTimeout(attached.get(tabId));
     const idle = recorders.has(tabId) ? DEVTOOLS_IDLE_MS : DEBUGGER_IDLE_MS;
@@ -1265,7 +1274,7 @@ async function showPointer(tabId, cmd) {
     const res = await runInPage(tabId, page.overlay, [{ ...cmd, idleMs: IDLE_MS }]);
     if (Array.isArray(res?.at)) lastPointer.set(tabId, { point: res.at, at: Date.now() });
     else if (lastPointer.has(tabId)) lastPointer.get(tabId).at = Date.now(); // a caret: still active
-    if (res?.lead > 0) await new Promise((r) => setTimeout(r, Math.min(res.lead, 1000)));
+    if (res?.lead > 0) await new Promise((r) => setTimeout(r, Math.min(res.lead, GLIDE.maxMs)));
     pointerSettlesAt = Date.now() + settleMs(cmd);
   } catch {
     /* Nothing to draw on. */
@@ -1292,14 +1301,17 @@ chrome.tabs.onUpdated.addListener((tabId, info) => {
 });
 chrome.tabs.onRemoved.addListener((tabId) => void lastPointer.delete(tabId));
 
+/** Take the dot (and any caret) off one tab: its scenario is over. */
+function hidePointer(tabId) {
+  lastPointer.delete(tabId);
+  runInPage(tabId, page.overlay, [hideCommand()]).catch(() => {
+    /* Gone or not drawable: nothing to hide. */
+  });
+}
+
 /** Take the dot off every page it is on: the agent was paused or unpaired. */
 function hidePointers() {
-  for (const tabId of lastPointer.keys()) {
-    runInPage(tabId, page.overlay, [hideCommand()]).catch(() => {
-      /* Gone or not drawable: nothing to hide. */
-    });
-  }
-  lastPointer.clear();
+  for (const tabId of [...lastPointer.keys()]) hidePointer(tabId);
 }
 /**
  * One operation the paired agent asked for. `ctx` is the call it came in (`cancelled`
