@@ -3,7 +3,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   CARET_MS,
-  GLIDE_MS,
+  GLIDE,
   IDLE_MS,
   caretCommand,
   dragCommand,
@@ -16,7 +16,7 @@ import {
 } from "./pointer.js";
 
 const at = { x: 10, y: 20 };
-const point = (extra) => ({ points: [[10, 20]], glideMs: GLIDE_MS, ms: 0, hold: false, ...extra });
+const point = (extra) => ({ points: [[10, 20]], glide: GLIDE, ms: 0, hold: false, ...extra });
 
 test("a click pulses once, a double click twice, and neither leaves a button held", () => {
   assert.deepEqual(pointerCommand("click", at), point({ pulses: 1, pressed: false }));
@@ -37,7 +37,7 @@ test("a move or a wheel turn moves the dot and leaves the pressed state alone", 
 test("a path is held down along its points for about the stroke's own time", () => {
   const points = [[0, 0], [5, 5], [10, 10]];
   assert.deepEqual(pointerCommand("path", { points }), {
-    points, glideMs: GLIDE_MS, ms: 24, hold: true, pulses: 0, pressed: false,
+    points, glide: GLIDE, ms: 24, hold: true, pulses: 0, pressed: false,
   });
 });
 
@@ -60,7 +60,7 @@ test("nothing to show: no location, no usable point, an unknown action", () => {
 
 test("a ref click names the ref for the page to find, and pulses", () => {
   assert.deepEqual(refClickCommand(7), {
-    ref: "7", points: null, glideMs: GLIDE_MS, ms: 0, hold: false, pulses: 1, pressed: false,
+    ref: "7", points: null, glide: GLIDE, ms: 0, hold: false, pulses: 1, pressed: false,
   });
 });
 
@@ -99,7 +99,7 @@ test("after a page load the dot comes back where it was, still, for the rest of 
   const last = { point: [10, 20], at: 1000 };
   assert.deepEqual(restoreCommand(last, 1000 + 500), {
     points: [[10, 20]],
-    glideMs: 0,
+    glide: null,
     ms: 0,
     hold: false,
     pulses: 0,
@@ -114,4 +114,10 @@ test("after a page load the dot comes back where it was, still, for the rest of 
 
 test("hiding takes the dot off the page", () => {
   assert.deepEqual(hideCommand(), { hide: true });
+});
+
+test("the glide is a hand's pace: a fraction of a second, never more than about one", () => {
+  assert.ok(Object.isFrozen(GLIDE));
+  assert.ok(GLIDE.minMs >= 200 && GLIDE.minMs < GLIDE.maxMs && GLIDE.maxMs <= 1500);
+  assert.ok(GLIDE.msPerDoubling > 0 && GLIDE.arc > 0 && GLIDE.maxArcPx > 0);
 });

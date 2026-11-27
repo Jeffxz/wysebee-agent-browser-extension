@@ -507,8 +507,10 @@ export function locatePath(points, pxPerCss) {
 /**
  * The agent pointer, drawn for the person watching (what to draw: pointer.js).
  *
- * A red dot where the agent's mouse is. It glides (over `glideMs`) from where it was
- * to the first of `points`, then travels through the rest over `ms`. With `hold` it is
+ * A red dot where the agent's mouse is. It glides from where it was to the first of
+ * `points` like a hand on a mouse (`glide`: pointer.js's GLIDE — the longer the reach
+ * the longer it takes, on a slight arc, easing in and out), then travels through the
+ * rest over `ms`. With `hold` it is
  * pressed for that travel — a pulse and a darker, smaller dot as the button goes
  * down, another pulse as it comes up — which is how a drag, a stroke or a scroll
  * looks; otherwise it pulses `pulses` times on arrival (a click) and is left
@@ -625,18 +627,51 @@ export function overlay(cmd) {
     const shown = dot.classList.contains("on") && !!dot.style.translate;
     const from = shown ? dot.style.translate : xy(first);
     const moved = from !== xy(first);
-    lead = shown && moved ? Math.max(0, Number(cmd.glideMs) || 0) : 0;
+    // The glide, as a hand moves a mouse: its time grows with the distance (Fitts's
+    // law), its path bows slightly to one side (a quadratic curve through a control
+    // point pushed sideways off the midpoint), and its pace follows a minimum-jerk
+    // profile — slow off the mark, quick in the middle, slowing to land. The pace is
+    // baked into how far apart the sampled points are, so the keyframes run linearly.
+    const glidePath = () => {
+      const g = cmd.glide;
+      if (!shown || !moved || !g) return null;
+      const [x0, y0] = from.split(" ").map((v) => parseFloat(v));
+      const [x1, y1] = first;
+      const dx = x1 - x0;
+      const dy = y1 - y0;
+      const d = Math.hypot(dx, dy);
+      if (!Number.isFinite(d) || d < 2) return null;
+      const glideMs = Math.min(g.maxMs, g.minMs + g.msPerDoubling * Math.log2(1 + d / 16));
+      const bow = Math.min(g.maxArcPx, d * g.arc);
+      const cx = (x0 + x1) / 2 - (dy / d) * bow;
+      const cy = (y0 + y1) / 2 + (dx / d) * bow;
+      const steps = 24;
+      const path = [];
+      for (let i = 1; i <= steps; i++) {
+        const t = i / steps;
+        const s = t * t * t * (10 - 15 * t + 6 * t * t);
+        const u = 1 - s;
+        path.push(i === steps ? first : [u * u * x0 + 2 * u * s * cx + s * s * x1, u * u * y0 + 2 * u * s * cy + s * s * y1]);
+      }
+      return { ms: Math.round(glideMs), path };
+    };
+    const glide = glidePath();
+    lead = glide ? glide.ms : 0;
     dot.classList.add("on");
     const total = lead + ms;
     if (total > 0 && (moved || points.length > 1)) {
       // One keyframe per point, timed so the glide takes `lead` and the stroke `ms`.
       const frames = [{ translate: from, offset: 0 }];
-      if (lead) frames.push({ translate: xy(first), offset: lead / total });
+      if (glide) {
+        glide.path.forEach((p, i) => {
+          frames.push({ translate: xy(p), offset: (lead * (i + 1)) / glide.path.length / total });
+        });
+      }
       points.slice(1).forEach((p, i) => {
         frames.push({ translate: xy(p), offset: (lead + (ms * (i + 1)) / (points.length - 1)) / total });
       });
       frames[frames.length - 1].offset = 1;
-      ui.anim = dot.animate(frames, { duration: total, easing: points.length > 1 ? "linear" : "ease-out" });
+      ui.anim = dot.animate(frames, { duration: total, easing: "linear" });
       const anim = ui.anim;
       anim.onfinish = () => {
         if (ui.anim === anim) ui.anim = null;
